@@ -63,7 +63,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
     $page = $this->grav['admin']->page(true);
     $twig->twig_vars['context'] = $page;
     $twig->twig_vars['users'] = $this->users();
-    $twig->twig_vars['fields'] = $this->config->get(self::CONFIG_KEY.'.modal.fields');
+    $twig->twig_vars['fields'] = $this->config->get(self::CONFIG_KEY . '.modal.fields');
   }
 
   public function users() {
