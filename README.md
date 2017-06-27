@@ -1,7 +1,5 @@
 # Admin Addon User Manager Plugin
 
-**This README.md file should be modified to describe the features, installation, configuration, and general usage of this plugin.**
-
 The **Admin Addon User Manager** Plugin is for [Grav CMS](http://github.com/getgrav/grav). A simple admin panel extension which adds the option to manage users
 
 ## Installation
@@ -38,13 +36,4 @@ enabled: true
 
 ## Usage
 
-**Describe how to use the plugin.**
-
-## Credits
-
-**Did you incorporate third-party code? Want to thank somebody?**
-
-## To Do
-
-- [ ] Future plans, if any
-
+Install the plugin and you are good to go. 'User Manager' will appear in the sidebar of the admin panel.
