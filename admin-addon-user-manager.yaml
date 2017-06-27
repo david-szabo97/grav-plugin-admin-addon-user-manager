@@ -1,0 +1,10 @@
+enabled: true
+
+modal:
+  fields:
+  - type: section
+    title: PLUGIN_ADMIN_ADDON_USER_MANAGER.CREATE_USER
+
+  - type: text
+    label: PLUGIN_ADMIN_ADDON_USER_MANAGER.USERNAME
+    name: username

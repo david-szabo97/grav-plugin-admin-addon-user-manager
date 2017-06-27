@@ -1,0 +1,9 @@
+.admin-addon-user-manager .row {
+    border-bottom: 1px solid #e6e6e6;
+    padding-left: 3rem;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    line-height: 2.5rem;
+    padding-right: 3rem;
+}

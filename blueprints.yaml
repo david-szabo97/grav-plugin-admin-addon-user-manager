@@ -1,0 +1,30 @@
+name: Admin Addon User Manager
+version: 1.0.0
+description: A simple admin panel extension which adds the option to manage users
+icon: plug
+author:
+  name: Dávid Szabó
+  email: david.szabo97@gmail.com
+homepage: https://github.com/david-szabo97/grav-plugin-admin-addon-user-manager
+keywords: grav, plugin, admin, media
+bugs: https://github.com/david-szabo97/grav-plugin-admin-addon-user-manager/issues
+docs: https://github.com/david-szabo97/grav-plugin-admin-addon-user-manager/blob/master/README.md
+license: MIT
+
+dependencies:
+    - { name: grav, version: '>=1.0.0' }
+    - { name: admin, version: '>=1.0.0' }
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: Plugin status
+      highlight: 1
+      default: 0
+      options:
+        1: Enabled
+        0: Disabled
+      validate:
+        type: bool

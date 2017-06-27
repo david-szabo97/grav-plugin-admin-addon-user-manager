@@ -1,0 +1,42 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block titlebar %}
+  <div class="button-bar">
+    <a class="button" href="#modal-admin-addon-user-manager-new" data-remodal-target="modal-admin-addon-user-manager-new"><i class="fa fa-plus"></i> {{ "PLUGIN_ADMIN.ADD"|tu }}</a>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <h1>Users</h1>
+  <div class="admin-addon-user-manager">
+    {% for user in users %}
+    <div class="row">
+      <a href="{{ base_url}}/user/{{ user.username }}">{{ user.username }}</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="remodal" data-remodal-id="modal-admin-addon-user-manager-new" data-remodal-options="hashTracking: false">
+    <form method="post" onsubmit='handleAdminAddonUserManagerSubmit(this); return false;'>
+      {% for field in fields %}
+        {% if field.type %}
+          {% set value = data.value(field.name) %}
+          <div class="block block-{{field.type}}">
+            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="button-bar">
+        <button class="button primary" >{{ "PLUGIN_ADMIN.CONTINUE"|tu }}</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function handleAdminAddonUserManagerSubmit(form) {
+      var username = form.querySelector('[name=username]').value;
+      window.location = '{{ base_url }}/user/' + username;
+    }
+  </script>
+{% endblock %}
