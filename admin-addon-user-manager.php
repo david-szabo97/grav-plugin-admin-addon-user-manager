@@ -28,6 +28,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
       'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
       'onAdminMenu' => ['onAdminMenu', 0],
       'onAssetsInitialized' => ['onAssetsInitialized', 0],
+      'onAdminTaskExecute' => ['onAdminTaskExecute', 0],
     ]);
   }
 
@@ -64,24 +65,6 @@ class AdminAddonUserManagerPlugin extends Plugin {
     $twig->twig_vars['context'] = $page;
     $twig->twig_vars['users'] = $this->users();
     $twig->twig_vars['fields'] = $this->config->get(self::CONFIG_KEY . '.modal.fields');
-  }
-
-  public function onAdminTaskExecute($e) {
-    $method = $e['method'];
-
-    if ($method === "taskUserDelete") {
-      $page = $this->grav['admin']->page(true);
-      $username = $this->grav['uri']->paths()[2];
-      $user = User::load($username);
-
-      if ($user->file()->exists()) {
-        $user->file()->delete();
-        $this->grav->redirect('/' . $this->grav['admin']->base . '/' . self::PAGE_LOCATION);
-        return true;
-      }
-    }
-
-    return false;
   }
 
   public function users() {
