@@ -10,8 +10,14 @@
   <h1>Users</h1>
   <div class="admin-addon-user-manager">
     {% for user in users %}
-    <div class="row">
-      <a href="{{ base_url}}/user/{{ user.username }}">{{ user.username }}</a>
+    <div class="cell">
+      <div class="user">
+        <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
+        <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
+        <div class="user__actions">
+          <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ config.system.param_sep ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </div>

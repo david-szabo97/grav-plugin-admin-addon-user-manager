@@ -1,9 +1,67 @@
-.admin-addon-user-manager .row {
-    border-bottom: 1px solid #e6e6e6;
-    padding-left: 3rem;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-    line-height: 2.5rem;
-    padding-right: 3rem;
+.admin-addon-user-manager {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.admin-addon-user-manager .cell {
+  flex: 0 0 100%;
+}
+
+.admin-addon-user-manager .user {
+  margin: 16px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.admin-addon-user-manager .user__avatar,
+.admin-addon-user-manager .user__avatar img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  border-radius: 2px 2px 0 0;
+  object-fit: cover;
+}
+
+.admin-addon-user-manager .user__username {
+  padding: 8px;
+}
+
+.admin-addon-user-manager .user__actions {
+  padding: 8px;
+  border-top: 1px solid rgba(0, 0, 0, .14);
+  overflow: hidden;
+}
+
+.admin-addon-user-manager .user__actions>a {
+  float: right;
+  text-transform: uppercase;
+}
+
+#admin-main .admin-addon-user-manager .user__actions>a.delete {
+  color: #f44336;
+}
+
+#admin-main .admin-addon-user-manager .user__actions>a.delete:hover {
+  color: #f6685e;
+}
+
+@media only screen and (min-width: 480px) {
+  .admin-addon-user-manager .cell {
+    flex: 0 0 50%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .admin-addon-user-manager .cell {
+    flex: 0 0 33.333%;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .admin-addon-user-manager .cell {
+    flex: 0 0 20%;
+  }
 }
