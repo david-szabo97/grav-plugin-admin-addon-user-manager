@@ -10,7 +10,10 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
   const SLUG = 'admin-addon-user-manager';
   const PAGE_LOCATION = 'user-manager';
-  const CONFIG_KEY = 'plugins.' . self::SLUG;
+
+  public function getConfigKey() {
+    return 'plugins.' . self::SLUG;
+  }
 
   public static function getSubscribedEvents() {
     return [
@@ -64,7 +67,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
     $page = $this->grav['admin']->page(true);
     $twig->twig_vars['context'] = $page;
     $twig->twig_vars['users'] = $this->users();
-    $twig->twig_vars['fields'] = $this->config->get(self::CONFIG_KEY . '.modal.fields');
+    $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
   }
 
   public function onAdminTaskExecute($e) {
