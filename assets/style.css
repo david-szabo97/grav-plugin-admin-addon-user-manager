@@ -109,6 +109,12 @@
   margin: 16px;
 }
 
+.admin-addon-user-manager--list .cell + .cell {
+  border-top: 1px solid rgba(0, 0, 0, .24);
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
 .admin-addon-user-manager--list .user {
   display: flex;
   flex-direction: row;
