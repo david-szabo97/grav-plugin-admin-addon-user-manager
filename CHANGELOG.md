@@ -1,3 +1,9 @@
+# v1.1.2
+##  07/19/2017
+
+1. [](#improved)
+    * No more page jumping because of avatars loading
+
 # v1.1.1
 ##  07/06/2017
 
