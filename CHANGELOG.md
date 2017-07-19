@@ -1,3 +1,10 @@
+# v1.2.0
+##  07/19/2017
+
+1. [](#feature)
+    * Added pagination
+    * Added list style
+
 # v1.1.2
 ##  07/19/2017
 
