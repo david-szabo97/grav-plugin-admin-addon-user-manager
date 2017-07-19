@@ -9,6 +9,10 @@
   padding-left: 8px;
 }
 
+.admin-addon-user-manager .cell--header {
+  font-weight: bold;
+}
+
 /**
  * Grid style
  */
