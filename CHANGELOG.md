@@ -1,3 +1,13 @@
+# v1.3.1
+##  07/19/2017
+
+1. [](#improved)
+    * Redirects to last URL after user delete
+    * Prevents cache refresh after user delete (performance improvement)
+
+2. [](#bugfix)
+    * Params are now validated
+
 # v1.3.0
 ##  07/19/2017
 
