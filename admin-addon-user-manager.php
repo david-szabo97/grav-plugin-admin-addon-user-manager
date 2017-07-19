@@ -73,14 +73,14 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');
-    if (!$listStyle) {
+    if ($listStyle !== 'grid' && $listStyle !== 'list') {
       $listStyle = 'grid';
     }
     $twig->twig_vars['listStyle'] = $listStyle;
 
     // Pagination
     $perPage = 10;
-    $pageNumber = $uri->param('page', 1);
+    $pageNumber = $uri->param('page');
     if (!$pageNumber) {
       $pageNumber = 1;
     }
@@ -89,8 +89,16 @@ class AdminAddonUserManagerPlugin extends Plugin {
     $users = $this->users();
     $usersCount = count($users);
     $pages = ceil($usersCount / $perPage);
+    // Make sure the page parameter is valid
+    if ($pageNumber < 1) {
+      $pageNumber = 1;
+    }
+
+    if ($pageNumber > $pages) {
+      $pageNumber = $pages;
+    }
     $offset = $perPage * ($pageNumber - 1);
-    
+
     $twig->twig_vars['pagination'] = [
       'current' => $pageNumber,
       'count' => $pages,
@@ -108,7 +116,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
       $page = $this->grav['admin']->page(true);
       $username = $this->grav['uri']->paths()[2];
       $user = User::load($username);
-      
+
       if ($user->file()->exists()) {
         $user->file()->delete();
         $this->grav->redirect('/' . $this->grav['admin']->base . '/' . self::PAGE_LOCATION);
