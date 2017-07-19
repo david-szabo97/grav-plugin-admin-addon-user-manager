@@ -67,6 +67,8 @@ class AdminAddonUserManagerPlugin extends Plugin {
       return;
     }
 
+    $this->grav['session']->{self::SLUG . '.previous_url'} = $uri->route() . $uri->params();
+
     $page = $this->grav['admin']->page(true);
     $twig->twig_vars['context'] = $page;
     $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
@@ -119,7 +121,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
       if ($user->file()->exists()) {
         $user->file()->delete();
-        $this->grav->redirect('/' . $this->grav['admin']->base . '/' . self::PAGE_LOCATION);
+        $this->grav->redirect($this->grav['session']->{self::SLUG . '.previous_url'});
         return true;
       }
     }
