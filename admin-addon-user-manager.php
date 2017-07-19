@@ -65,8 +65,19 @@ class AdminAddonUserManagerPlugin extends Plugin {
     }
 
     $page = $this->grav['admin']->page(true);
+    $pageNumber = $uri->param('page');
+    $perPage = 10;
+    $users = $this->users();
+    $usersCount = count($users);
+    $pages = ceil($usersCount / $perPage);
+    $offset = $perPage * ($pageNumber - 1);
     $twig->twig_vars['context'] = $page;
-    $twig->twig_vars['users'] = $this->users();
+    $twig->twig_vars['pagination'] = [
+      'current' => $pageNumber,
+      'count' => $pages,
+      'total' => $usersCount,
+    ];
+    $twig->twig_vars['users'] = array_slice($users, $offset, $perPage);
     $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
     $twig->twig_vars['listStyle'] = $uri->param('listStyle');
   }

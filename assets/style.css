@@ -1,3 +1,6 @@
+/**
+ * Style chooser
+ */
 .admin-addon-user-manager-style {
   float: right;
   overflow: hidden;
@@ -11,6 +14,34 @@
 
 .admin-addon-user-manager .cell--header {
   font-weight: bold;
+}
+
+/**
+ * Pagination
+ */
+.admin-addon-user-manager-pagination {
+  overflow: hidden;
+  clear: both;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-addon-user-manager-pagination li {
+  padding: 4px 8px;
+  border: 1px solid rgba(0, 0, 0, .24);
+  float: left;
+}
+
+.admin-addon-user-manager-pagination li.current {
+  background: #0082ba;
+  color: white;
+}
+
+.admin-addon-user-manager-pagination li + li {
+  border-left: 0;
 }
 
 /**

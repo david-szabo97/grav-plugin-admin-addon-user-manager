@@ -14,8 +14,8 @@
   <h1>Users</h1>
 
   <div class="admin-addon-user-manager-style">
-    {% if style != 'grid' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'grid' }}/"><i class="fa fa-th"></i></a>{% else %}<i class="fa fa-th"></i>{% endif %}
-    {% if style != 'list' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' }}"><i class="fa fa-list"></i></a>{% else %}<i class="fa fa-list"></i>{% endif %}
+    {% if style != 'grid' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'grid' ~ '/page' ~ config.system.param_sep ~ pagination.current }}/"><i class="fa fa-th"></i></a>{% else %}<i class="fa fa-th"></i>{% endif %}
+    {% if style != 'list' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ pagination.current }}"><i class="fa fa-list"></i></a>{% else %}<i class="fa fa-list"></i>{% endif %}
   </div>
 
   <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
@@ -43,6 +43,16 @@
     </div>
     {% endfor %}
   </div>
+
+  <ul class="admin-addon-user-manager-pagination">
+    {% for i in 1..pagination.count %}
+      {% if pagination.current == i %}
+        <li class="current">{{ i }}</li>
+      {% else %}
+        <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
 
   <div class="remodal" data-remodal-id="modal-admin-addon-user-manager-new" data-remodal-options="hashTracking: false">
     <form method="post" onsubmit='handleAdminAddonUserManagerSubmit(this); return false;'>
