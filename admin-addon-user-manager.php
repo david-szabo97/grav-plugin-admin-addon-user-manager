@@ -65,21 +65,37 @@ class AdminAddonUserManagerPlugin extends Plugin {
     }
 
     $page = $this->grav['admin']->page(true);
-    $pageNumber = $uri->param('page');
+    $twig->twig_vars['context'] = $page;
+    $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
+
+    // List style (grid or list)
+    $listStyle = $uri->param('listStyle');
+    if (!$listStyle) {
+      $listStyle = 'grid';
+    }
+    $twig->twig_vars['listStyle'] = $listStyle;
+
+    // Pagination
     $perPage = 10;
+    $pageNumber = $uri->param('page', 1);
+    if (!$pageNumber) {
+      $pageNumber = 1;
+    }
+
+    // Users
     $users = $this->users();
     $usersCount = count($users);
     $pages = ceil($usersCount / $perPage);
     $offset = $perPage * ($pageNumber - 1);
-    $twig->twig_vars['context'] = $page;
+    
     $twig->twig_vars['pagination'] = [
       'current' => $pageNumber,
       'count' => $pages,
       'total' => $usersCount,
+      'perPage' => $perPage,
+      'offset' => $offset,
     ];
     $twig->twig_vars['users'] = array_slice($users, $offset, $perPage);
-    $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
-    $twig->twig_vars['listStyle'] = $uri->param('listStyle');
   }
 
   public function onAdminTaskExecute($e) {

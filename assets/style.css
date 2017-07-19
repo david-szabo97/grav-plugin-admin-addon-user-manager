@@ -20,13 +20,18 @@
  * Pagination
  */
 .admin-addon-user-manager-pagination {
-  overflow: hidden;
-  clear: both;
+  margin: 16px auto;
+  padding: 0;
+  text-align: center;
+}
+
+.admin-addon-user-manager-pagination ul {
   list-style: none;
   margin: 0 auto;
+  overflow: hidden;
+  clear: both;
+  display: inline-block;
   padding: 0;
-  display: flex;
-  justify-content: center;
 }
 
 .admin-addon-user-manager-pagination li {
