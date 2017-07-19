@@ -1,3 +1,10 @@
+# v1.3.0
+##  07/19/2017
+
+1. [](#improved)
+    * Pagination is now more user friendly
+    * Users are cached (better performance)
+
 # v1.2.0
 ##  07/19/2017
 
