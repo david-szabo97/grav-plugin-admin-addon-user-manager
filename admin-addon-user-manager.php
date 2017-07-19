@@ -73,7 +73,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
   public function onAdminTaskExecute($e) {
     $method = $e['method'];
 
-    if ($method === "taskUserDelete") {
+    if ($method === 'taskUserDelete') {
       $page = $this->grav['admin']->page(true);
       $username = $this->grav['uri']->paths()[2];
       $user = User::load($username);
