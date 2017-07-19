@@ -1,8 +1,8 @@
-# v1.0.1
+# v1.1.1
 ##  07/06/2017
 
 1. [](#bugfix)
-    * Plugin is now compatibl with PHP 5.5
+    * Plugin is now compatible with PHP 5.5
 
 # v1.1.0
 ##  07/03/2017
