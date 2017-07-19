@@ -106,7 +106,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin: 16px;
+  padding: 16px;
 }
 
 .admin-addon-user-manager--list .cell + .cell {
