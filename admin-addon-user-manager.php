@@ -120,7 +120,11 @@ class AdminAddonUserManagerPlugin extends Plugin {
       $user = User::load($username);
 
       if ($user->file()->exists()) {
+        $users = $this->users();
         $user->file()->delete();
+        // Prevent users cache refresh
+        unset($users[$username]);
+        $this->saveUsersToCache($users);
         $this->grav->redirect($this->grav['session']->{self::SLUG . '.previous_url'});
         return true;
       }
@@ -150,14 +154,24 @@ class AdminAddonUserManagerPlugin extends Plugin {
       }
 
       // Populate and/or refresh cache
-      $usersCache = [
-        'modifyTime' => $modifyTime,
-        'users' => $users,
-      ];
-      $cache->save($cacheKey, $usersCache);
+      $this->saveUsersToCache($users);
     }
 
     return $usersCache['users'];
+  }
+
+  private function saveUsersToCache($users) {
+    $cache =  $this->grav['cache'];
+    $cacheKey = self::SLUG . '.users';
+    $dir = $this->grav['locator']->findResource('account://');
+    $modifyTime = filemtime($dir);
+
+    $usersCache = [
+      'modifyTime' => $modifyTime,
+      'users' => $users,
+    ];
+
+    $cache->save($cacheKey, $usersCache);
   }
 
 }
