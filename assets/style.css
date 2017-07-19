@@ -1,21 +1,35 @@
-.admin-addon-user-manager {
+.admin-addon-user-manager-style {
+  float: right;
+  overflow: hidden;
+  font-size: 1.5em;
+  margin: 0 16px;
+}
+
+.admin-addon-user-manager-style i {
+  padding-left: 8px;
+}
+
+/**
+ * Grid style
+ */
+.admin-addon-user-manager--grid {
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.admin-addon-user-manager .cell {
+.admin-addon-user-manager--grid .cell {
   flex: 0 0 100%;
 }
 
-.admin-addon-user-manager .user {
+.admin-addon-user-manager--grid .user {
   margin: 16px;
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 }
 
-.admin-addon-user-manager .user__avatar {
+.admin-addon-user-manager--grid .user__avatar {
   display: block;
   width: 100%;
   height: 0;
@@ -24,7 +38,7 @@
   overflow: hidden;
 }
 
-.admin-addon-user-manager .user__avatar img {
+.admin-addon-user-manager--grid .user__avatar img {
   position: absolute;
   left: 0;
   top: 0;
@@ -36,43 +50,78 @@
   object-fit: cover;
 }
 
-.admin-addon-user-manager .user__username {
+.admin-addon-user-manager--grid .user__username {
   padding: 8px;
 }
 
-.admin-addon-user-manager .user__actions {
+.admin-addon-user-manager--grid .user__email {
+  padding: 0 8px 8px 8px;
+}
+
+.admin-addon-user-manager--grid .user__actions {
   padding: 8px;
   border-top: 1px solid rgba(0, 0, 0, .14);
   overflow: hidden;
 }
 
-.admin-addon-user-manager .user__actions > a {
+.admin-addon-user-manager--grid .user__actions > a {
   float: right;
   text-transform: uppercase;
 }
 
-#admin-main .admin-addon-user-manager .user__actions > a.delete {
+#admin-main .admin-addon-user-manager--grid .user__actions > a.delete {
   color: #f44336;
 }
 
-#admin-main .admin-addon-user-manager .user__actions > a.delete:hover {
+#admin-main .admin-addon-user-manager--grid .user__actions > a.delete:hover {
   color: #f6685e;
 }
 
 @media only screen and (min-width: 480px) {
-  .admin-addon-user-manager .cell {
+  .admin-addon-user-manager--grid .cell {
     flex: 0 0 50%;
   }
 }
 
 @media only screen and (min-width: 768px) {
-  .admin-addon-user-manager .cell {
+  .admin-addon-user-manager--grid .cell {
     flex: 0 0 33.333%;
   }
 }
 
 @media only screen and (min-width: 1400px) {
-  .admin-addon-user-manager .cell {
+  .admin-addon-user-manager--grid .cell {
     flex: 0 0 20%;
   }
+}
+
+/**
+ * List style
+ */
+.admin-addon-user-manager--list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+}
+
+.admin-addon-user-manager--list .user {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-addon-user-manager--list .user > * {
+  padding: 0 8px;
+}
+
+.admin-addon-user-manager--list .user__username {
+  flex: 0 0 25%;
+}
+
+.admin-addon-user-manager--list .user__email {
+  flex: 1 0 55%;
+}
+
+.admin-addon-user-manager--list .user__actions {
+  flex: 0 0 20%;
 }

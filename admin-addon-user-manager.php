@@ -68,6 +68,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
     $twig->twig_vars['context'] = $page;
     $twig->twig_vars['users'] = $this->users();
     $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
+    $twig->twig_vars['listStyle'] = $uri->param('listStyle');
   }
 
   public function onAdminTaskExecute($e) {

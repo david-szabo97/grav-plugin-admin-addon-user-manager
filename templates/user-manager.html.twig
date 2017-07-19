@@ -9,13 +9,33 @@
 {% endblock %}
 
 {% block content %}
+  {% set style = listStyle|default('grid') %}
+
   <h1>Users</h1>
-  <div class="admin-addon-user-manager">
+
+  <div class="admin-addon-user-manager-style">
+    {% if style != 'grid' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'grid' }}/"><i class="fa fa-th"></i></a>{% else %}<i class="fa fa-th"></i>{% endif %}
+    {% if style != 'list' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' }}"><i class="fa fa-list"></i></a>{% else %}<i class="fa fa-list"></i>{% endif %}
+  </div>
+
+  <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
+    {% if style == 'list' %}
+    <div class="cell cell--header">
+      <div class="user">
+        <div class="user__username">Username</div>
+        <div class="user__email">Email</div>
+        <div class="user__actions">Actions</div>
+      </div>
+    </div>
+    {% endif %}
     {% for user in users %}
     <div class="cell">
       <div class="user">
+        {% if style == 'grid' %}
         <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
+        {% endif %}
         <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
+        <div class="user__email">{{ user.email }}</div>
         <div class="user__actions">
           <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ config.system.param_sep ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
         </div>
