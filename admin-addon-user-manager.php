@@ -46,6 +46,9 @@ class AdminAddonUserManagerPlugin extends Plugin {
       'location' => self::PAGE_LOCATION,
       'icon' => 'fa-user',
       'authorize' => 'admin.users',
+      'badge' => [
+        'count' => count($this->users())
+      ]
     ];
   }
 
@@ -118,17 +121,33 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
   public function users() {
     $users = [];
-
     $dir = $this->grav['locator']->findResource('account://');
-    $files = $dir ? array_diff(scandir($dir), ['.', '..']) : [];
-    foreach ($files as $file) {
-      if (Utils::endsWith($file, YAML_EXT)) {
-        $user = User::load(trim(pathinfo($file, PATHINFO_FILENAME)));
-        $users[$user->username] = $user;
+
+    // Try cache
+    $cache =  $this->grav['cache'];
+    $cacheKey = self::SLUG . '.users';
+
+    $modifyTime = filemtime($dir);
+    $usersCache = $cache->fetch($cacheKey);
+    if (!$usersCache || $modifyTime > $usersCache['modifyTime']) {
+      // Find accounts
+      $files = $dir ? array_diff(scandir($dir), ['.', '..']) : [];
+      foreach ($files as $file) {
+        if (Utils::endsWith($file, YAML_EXT)) {
+          $user = User::load(trim(pathinfo($file, PATHINFO_FILENAME)));
+          $users[$user->username] = $user;
+        }
       }
+
+      // Populate and/or refresh cache
+      $usersCache = [
+        'modifyTime' => $modifyTime,
+        'users' => $users,
+      ];
+      $cache->save($cacheKey, $usersCache);
     }
 
-    return $users;
+    return $usersCache['users'];
   }
 
 }
