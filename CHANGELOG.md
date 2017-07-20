@@ -1,3 +1,12 @@
+# v1.3.2
+##  07/20/2017
+
+1. [](#improved)
+    * Performance is improved when admin cache is disabled
+
+1. [](#bugfix)
+    * Fixed plugin not working when admin cache is disabled
+
 # v1.3.1
 ##  07/19/2017
 
