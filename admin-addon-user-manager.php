@@ -33,7 +33,12 @@ class AdminAddonUserManagerPlugin extends Plugin {
    */
   private $accountDirCached = null;
 
-  public function getConfigKey() {
+  /**
+   * Returns the plugin's configuration key
+   *
+   * @return String
+   */
+  public function getPluginConfigKey() {
     return 'plugins.' . self::SLUG;
   }
 
@@ -93,7 +98,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     $page = $this->grav['admin']->page(true);
     $twig->twig_vars['context'] = $page;
-    $twig->twig_vars['fields'] = $this->config->get($this->getConfigKey() . '.modal.fields');
+    $twig->twig_vars['fields'] = $this->config->get($this->getPluginConfigKey() . '.modal.fields');
 
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');
