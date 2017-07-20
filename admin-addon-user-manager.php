@@ -11,6 +11,13 @@ class AdminAddonUserManagerPlugin extends Plugin {
   const SLUG = 'admin-addon-user-manager';
   const PAGE_LOCATION = 'user-manager';
 
+  /**
+   * In-memory caching for users
+   *
+   * @var Array<User>
+   */
+  private $usersCached = null;
+
   public function getConfigKey() {
     return 'plugins.' . self::SLUG;
   }
@@ -134,6 +141,10 @@ class AdminAddonUserManagerPlugin extends Plugin {
   }
 
   public function users() {
+    if ($this->usersCached) {
+      return $this->usersCached;
+    }
+
     $users = [];
     $dir = $this->grav['locator']->findResource('account://');
 
@@ -158,6 +169,8 @@ class AdminAddonUserManagerPlugin extends Plugin {
     } else {
       $users = $usersCache['users'];
     }
+
+    $this->usersCached = $users;
 
     return $users;
   }
