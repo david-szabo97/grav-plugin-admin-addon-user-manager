@@ -155,9 +155,11 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
       // Populate and/or refresh cache
       $this->saveUsersToCache($users);
+    } else {
+      $users = $usersCache['users'];
     }
 
-    return $usersCache['users'];
+    return $users;
   }
 
   private function saveUsersToCache($users) {
