@@ -18,6 +18,13 @@ class AdminAddonUserManagerPlugin extends Plugin {
    */
   private $usersCached = null;
 
+  /**
+   * In-memory cache of the account directory
+   *
+   * @var String
+   */
+  private $accountDirCached = null;
+
   public function getConfigKey() {
     return 'plugins.' . self::SLUG;
   }
@@ -146,7 +153,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
     }
 
     $users = [];
-    $dir = $this->grav['locator']->findResource('account://');
+    $dir = $this->getAccountDir();
 
     // Try cache
     $cache =  $this->grav['cache'];
@@ -178,7 +185,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
   private function saveUsersToCache($users) {
     $cache =  $this->grav['cache'];
     $cacheKey = self::SLUG . '.users';
-    $dir = $this->grav['locator']->findResource('account://');
+    $dir = $this->getAccountDir();
     $modifyTime = filemtime($dir);
 
     $usersCache = [
@@ -187,6 +194,14 @@ class AdminAddonUserManagerPlugin extends Plugin {
     ];
 
     $cache->save($cacheKey, $usersCache);
+  }
+
+  private function getAccountDir() {
+    if ($this->accountDirCached) {
+      return $this->grav['locator']->findResource('account://');
+    }
+
+    return $this->accountDirCached = $this->grav['locator']->findResource('account://');
   }
 
 }
