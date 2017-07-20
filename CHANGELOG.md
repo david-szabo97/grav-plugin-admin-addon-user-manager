@@ -1,3 +1,13 @@
+# v1.3.3
+##  07/20/2017
+
+1. [](#new)
+    * Users to be shown per page is now configurable
+    * Default list style is now configurable
+
+2. [](#improved)
+    * Refactored code a bit
+
 # v1.3.2
 ##  07/20/2017
 
