@@ -8,7 +8,15 @@ use \Grav\Common\User\User;
 
 class AdminAddonUserManagerPlugin extends Plugin {
 
+  /**
+   * Slug is used to determine configuration, cache keys and assets location
+   */
   const SLUG = 'admin-addon-user-manager';
+
+  /**
+   * The location of the user manager
+   * /your/site/admin/PAGE_LOCATION
+   */
   const PAGE_LOCATION = 'user-manager';
 
   /**
