@@ -103,12 +103,12 @@ class AdminAddonUserManagerPlugin extends Plugin {
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');
     if ($listStyle !== 'grid' && $listStyle !== 'list') {
-      $listStyle = 'grid';
+      $listStyle = $this->config->get($this->getPluginConfigKey() . '.default_list_style', 'grid');
     }
     $twig->twig_vars['listStyle'] = $listStyle;
 
     // Pagination
-    $perPage = 10;
+    $perPage = $this->config->get($this->getPluginConfigKey() . '.pagination.per_page', 10);
     $pageNumber = $uri->param('page');
     if (!$pageNumber) {
       $pageNumber = 1;
