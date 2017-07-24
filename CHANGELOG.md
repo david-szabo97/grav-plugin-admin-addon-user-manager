@@ -1,3 +1,9 @@
+# v1.3.4
+##  07/24/2017
+
+1. [](#improved)
+    * Plugin is now compatible with Grav Admin Styles Plugin
+
 # v1.3.3
 ##  07/20/2017
 
