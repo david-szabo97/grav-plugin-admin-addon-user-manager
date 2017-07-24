@@ -54,7 +54,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
     }
 
     $this->enable([
-      'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', 0],
+      'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', -10],
       'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
       'onAdminMenu' => ['onAdminMenu', 0],
       'onAssetsInitialized' => ['onAssetsInitialized', 0],
