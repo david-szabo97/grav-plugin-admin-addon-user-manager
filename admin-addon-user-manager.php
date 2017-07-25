@@ -36,10 +36,13 @@ class AdminAddonUserManagerPlugin extends Plugin {
   /**
    * Returns the plugin's configuration key
    *
+   * @param String $key
    * @return String
    */
-  public function getPluginConfigKey() {
-    return 'plugins.' . self::SLUG;
+  public function getPluginConfigKey($key = null) {
+    $pluginKey = 'plugins.' . self::SLUG;
+
+    return ($key !== null) ? $pluginKey . '.' . $key : $pluginKey;
   }
 
   public static function getSubscribedEvents() {
@@ -98,17 +101,17 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     $page = $this->grav['admin']->page(true);
     $twig->twig_vars['context'] = $page;
-    $twig->twig_vars['fields'] = $this->config->get($this->getPluginConfigKey() . '.modal.fields');
+    $twig->twig_vars['fields'] = $this->config->get($this->getPluginConfigKey('modal.fields'));
 
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');
     if ($listStyle !== 'grid' && $listStyle !== 'list') {
-      $listStyle = $this->config->get($this->getPluginConfigKey() . '.default_list_style', 'grid');
+      $listStyle = $this->config->get($this->getPluginConfigKey('default_list_style'), 'grid');
     }
     $twig->twig_vars['listStyle'] = $listStyle;
 
     // Pagination
-    $perPage = $this->config->get($this->getPluginConfigKey() . '.pagination.per_page', 10);
+    $perPage = $this->config->get($this->getPluginConfigKey('pagination.per_page'), 10);
     $pageNumber = $uri->param('page');
     if (!$pageNumber) {
       $pageNumber = 1;
