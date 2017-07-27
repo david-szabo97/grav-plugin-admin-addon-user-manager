@@ -100,7 +100,7 @@ class Manager implements IManager {
         // Prevent users cache refresh
         unset($users[$username]);
         $this->saveUsersToCache($users);
-        $this->grav->redirect($this->grav['session']->{$this->plugin::SLUG . '.previous_url'});
+        $this->grav->redirect($this->plugin->getPreviousUrl());
         return true;
       }
     }
@@ -119,8 +119,6 @@ class Manager implements IManager {
     $twig = $this->grav['twig'];
     $page = $this->grav['page'];
     $uri = $this->grav['uri'];
-
-    $this->grav['session']->{$this->plugin::SLUG . '.previous_url'} = $uri->route() . $uri->params();
 
     $page = $this->grav['admin']->page(true);
     $vars['context'] = $page;

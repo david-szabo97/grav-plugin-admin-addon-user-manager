@@ -40,7 +40,11 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
   public function getConfigValue($key, $default = null) {
     return $this->config->get($key, $default);
-  } 
+  }
+
+  public function getPreviousUrl() {
+    return $this->grav['session']->{self::SLUG . '.previous_url'};
+  }
 
   public static function getSubscribedEvents() {
     return [
@@ -96,9 +100,13 @@ class AdminAddonUserManagerPlugin extends Plugin {
   public function onTwigSiteVariables() {
     $page = $this->grav['page'];
     $twig = $this->grav['twig'];
+    $session = $this->grav['session'];
+    $uri = $this->grav['uri'];
 
     foreach ($this->managers as $manager) {
       if ($page->slug() === $manager->getLocation()) {
+        $session->{self::SLUG . '.previous_url'} = $uri->route() . $uri->params();
+        
         $vars = $manager->handleRequest();
         $twig->twig_vars = array_merge($twig->twig_vars, $vars);
 
