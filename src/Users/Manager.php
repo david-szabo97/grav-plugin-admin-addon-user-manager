@@ -10,6 +10,7 @@ use AdminAddonUserManager\Pagination\ArrayPagination;
 use \Grav\Common\Utils;
 use \Grav\Common\User\User;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 
 class Manager implements IManager {
 
@@ -142,6 +143,7 @@ class Manager implements IManager {
     if ($filter) {
       try {
         $language = new ExpressionLanguage();
+        $language->addFunction(ExpressionFunction::fromPhp('count'));
         foreach ($users as $k => $user) {
           if (!is_array($user->groups)) {
             $user->groups = [];

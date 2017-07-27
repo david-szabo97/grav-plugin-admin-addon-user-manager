@@ -13,6 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use \Grav\Common\User\User;
 use \AdminAddonUserManager\Users\Manager as UsersManager;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 
 class Manager implements IManager, EventSubscriberInterface {
 
@@ -176,6 +177,7 @@ class Manager implements IManager, EventSubscriberInterface {
       if ($filter) {
         try {
           $language = new ExpressionLanguage();
+          $language->addFunction(ExpressionFunction::fromPhp('count'));
           foreach ($groups as $k => $group) {
             if (!$language->evaluate($_GET['filter'], ['group' => $group])) {
               unset($groups[$k]);
