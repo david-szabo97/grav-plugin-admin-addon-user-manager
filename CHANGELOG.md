@@ -1,3 +1,12 @@
+# v1.4.2
+##  07/27/2017
+
+1. [](#improved)
+    * Pagination performance improvement
+
+2. [](#bugfix)
+    * Fixed group name is not shown when editing a group
+
 # v1.4.1
 ##  07/27/2017
 
