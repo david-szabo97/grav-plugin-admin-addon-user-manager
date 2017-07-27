@@ -143,6 +143,10 @@ class Manager implements IManager {
       try {
         $language = new ExpressionLanguage();
         foreach ($users as $k => $user) {
+          if (!is_array($user->groups)) {
+            $user->groups = [];
+          }
+
           if (!$language->evaluate($_GET['filter'], ['user' => $user])) {
             unset($users[$k]);
           }
