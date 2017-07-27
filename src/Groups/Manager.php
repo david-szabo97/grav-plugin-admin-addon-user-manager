@@ -122,6 +122,7 @@ class Manager implements IManager, EventSubscriberInterface {
     }
 
     if ($group) {
+      $vars['exists'] = Group::groupExists($group);
       $vars['group'] = $group = Group::load($group);
     } else {
       $vars['fields'] = $this->plugin->getModalsConfiguration()['add_group']['fields'];
