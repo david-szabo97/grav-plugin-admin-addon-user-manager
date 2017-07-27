@@ -38,7 +38,7 @@
     {% for groupName, group in groups %}
     <div class="cell">
       <div class="user">
-        <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}"><i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
+        <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
         <div class="user__actions">
           <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ config.system.param_sep ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
         </div>

@@ -140,7 +140,19 @@ class Manager implements IManager, EventSubscriberInterface {
         'startOffset' => $pagination->getStartOffset(),
         'endOffset' => $pagination->getEndOffset()
       ];
-      $vars['groups'] = $pagination->getPaginatedRows();
+      $groups = $pagination->getPaginatedRows();
+
+      foreach ($groups as &$group) {
+        $group['users'] = 0;
+
+        foreach (UsersManager::$instance->users() as $u) {
+          if (in_array($group['groupname'], $u->get('groups', []))) {
+            $group['users']++;
+          }
+        }
+      }
+
+      $vars['groups'] = $groups;
     }
 
     return $vars;
