@@ -47,10 +47,10 @@
   <div class="admin-addon-user-manager-pagination">
     <ul class="admin-addon-user-manager-pagination__pages">
       {% if pagination.current > 1 %}
-      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ '1' }}"><<</a></li>
+      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ listStyle ~ '/page' ~ config.system.param_sep ~ '1' }}"><<</a></li>
       {% endif %}
       {% if pagination.current > 2 %}
-      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ (pagination.current - 1) }}"><</a></li>
+      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ listStyle ~ '/page' ~ config.system.param_sep ~ (pagination.current - 1) }}"><</a></li>
       {% endif %}
       {% set fromPage = (pagination.current - 2 < 1) ? 1 : pagination.current - 2 %}
       {% set toPage = (pagination.current + 2 > pagination.count) ? pagination.count : pagination.current + 2 %}
@@ -58,19 +58,18 @@
         {% if pagination.current == i %}
           <li class="current">{{ i }}</li>
         {% else %}
-          <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ i }}">{{ i }}</a></li>
+          <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ listStyle ~ '/page' ~ config.system.param_sep ~ i }}">{{ i }}</a></li>
         {% endif %}
       {% endfor %}
       {% if pagination.current < pagination.count - 1 %}
-      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ (pagination.current + 1) }}">></a></li>
+      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ listStyle ~ '/page' ~ config.system.param_sep ~ (pagination.current + 1) }}">></a></li>
       {% endif %}
       {% if pagination.current < pagination.count %}
-      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ pagination.count }}">>></a></li>
+      <li><a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ listStyle ~ '/page' ~ config.system.param_sep ~ pagination.count }}">>></a></li>
       {% endif %}
     </ul>
-    {% set startOffset = 1 + pagination.offset %}
-    {% set endOffset = startOffset + pagination.perPage - 1 %}
-    {% if endOffset > pagination.total %}{% set endOffset = pagination.total %}{% endif %}
+    {% set startOffset = pagination.startOffset + 1 %}
+    {% set endOffset = pagination.endOffset %}
     <div class="admin-addon-user-manager-pagination__text">Showing {{ startOffset }} - {{ endOffset }} of {{ pagination.total }}</div>
   </div>
 
