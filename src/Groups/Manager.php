@@ -12,6 +12,7 @@ use AdminAddonUserManager\Group;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use \Grav\Common\User\User;
 use \AdminAddonUserManager\Users\Manager as UsersManager;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class Manager implements IManager, EventSubscriberInterface {
 
@@ -157,9 +158,42 @@ class Manager implements IManager, EventSubscriberInterface {
     } else {
       $vars['fields'] = $this->plugin->getModalsConfiguration()['add_group']['fields'];
 
+      $groups = $this->groups();
+      foreach ($groups as &$group) {
+        $group['users'] = 0;
+
+        foreach (UsersManager::$instance->users() as $u) {
+          if (in_array($group['groupname'], $u->get('groups', []))) {
+            $group['users'] += 1;
+          }
+        }
+      }
+
+      // Filtering
+       $filterException = false;
+      $filter = (empty($_GET['filter'])) ? '' : $_GET['filter'];
+      $vars['filter'] = $filter;
+      if ($filter) {
+        try {
+          $language = new ExpressionLanguage();
+          foreach ($groups as $k => $group) {
+            if (!$language->evaluate($_GET['filter'], ['group' => $group])) {
+              unset($groups[$k]);
+            }
+          }
+        } catch (\Exception $exception) {
+          $vars['filterException'] = $exception;
+          $filterException = true;
+        }
+      }
+
+      if ($filterException) {
+        $groups = [];
+      }
+
       // Pagination
       $perPage = $this->plugin->getPluginConfigValue('pagination.per_page', 10);
-      $pagination = new ArrayPagination($this->groups(), $perPage);
+      $pagination = new ArrayPagination($groups, $perPage);
       $pagination->paginate($uri->param('page'));
 
       $vars['pagination'] = [
@@ -172,16 +206,6 @@ class Manager implements IManager, EventSubscriberInterface {
       ];
       $groups = $pagination->getPaginatedRows();
 
-      foreach ($groups as &$group) {
-        $group['users'] = 0;
-
-        foreach (UsersManager::$instance->users() as $u) {
-          if (in_array($group['groupname'], $u->get('groups', []))) {
-            $group['users']++;
-          }
-        }
-      }
-
       $vars['groups'] = $groups;
     }
 
@@ -189,7 +213,7 @@ class Manager implements IManager, EventSubscriberInterface {
   }
 
   public function groups() {
-    return $this->plugin->getConfigValue('groups', []);
+    return Group::groups();
   }
 
 }

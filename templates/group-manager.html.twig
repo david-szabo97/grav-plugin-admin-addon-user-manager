@@ -5,6 +5,8 @@
 {% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP"|tu ~ ": " ~ admin.route|e %}
 {% endif %}
 
+{% set ps = config.system.param_sep %}
+
 {% block titlebar %}
   {% if not group %}
   <div class="button-bar">
@@ -16,7 +18,7 @@
   <div class="button-bar">
     <a class="button" href="{{ base_url }}/group-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
     {% if exists %}
-    <a class="button disable-after-click" href="{{ uri.addNonce(uri.route(true) ~ '/task' ~ config.system.param_sep ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="page-delete" ><i class="fa fa-close"></i> {{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
+    <a class="button disable-after-click" href="{{ uri.addNonce(uri.route(true) ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="page-delete" ><i class="fa fa-close"></i> {{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
     {% endif %}
     <button class="button" type="submit" name="task" value="save" form="blueprints"><i class="fa fa-check"></i> {{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
   </div>
@@ -24,9 +26,21 @@
   {% endif %}
 {% endblock %}
 
+{% set appendUrl = '?filter=' ~ filter|url_encode %}
+
 {% block content %}
   {% if not group %}
   <h1>Groups</h1>
+
+  <form method="get">
+    {% if filterException %}
+    <div class="notices red"><h2>Filter Error</h2><p>{{ filterException.message }}</p></div>
+    {% endif %}
+    <div class="block block-text">
+      {% set field = { style: 'vertical', size: '', placeholder: 'Filter groups', name: 'filter', default: filter } %}
+      {% include 'forms/fields/text/text.html.twig' %}
+    </div>
+  </form>
 
   <div class="admin-addon-user-manager admin-addon-user-manager--list admin-addon-user-manager--group">
     <div class="cell cell--header">
@@ -40,14 +54,14 @@
       <div class="user">
         <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
         <div class="user__actions">
-          <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ config.system.param_sep ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+          <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
         </div>
       </div>
     </div>
     {% endfor %}
   </div>
 
-  {{ macros.pagination(pagination, uri.route(true), config.system.param_sep) }}
+  {{ macros.pagination(pagination, uri.route(true), ps, appendUrl) }}
 
   <div class="remodal" data-remodal-id="modal-admin-addon-user-manager-new" data-remodal-options="hashTracking: false">
     <form onsubmit='handleAdminAddonUserManagerSubmit(this); return false;'>
