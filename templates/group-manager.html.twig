@@ -73,7 +73,7 @@
     }
   </script>
   {% else %}
-  <h1>{{ group.readableName ?: groupName }}</h1>
+  <h1>{{ group.readableName ?: group.groupname }}</h1>
 
   {% include 'partials/blueprints.html.twig' with { data: group, blueprints: group.blueprints } %}
 
