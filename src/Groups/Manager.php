@@ -82,7 +82,7 @@ class Manager implements IManager, EventSubscriberInterface {
    * @return void
    */
   public function initializeAssets(Assets $assets) {
-    $this->grav['assets']->addCss('plugin://' . $this->plugin::SLUG . '/assets/users/style.css');
+    $this->grav['assets']->addCss('plugin://' . $this->plugin::SLUG . '/assets/groups/style.css');
   }
 
   /**
