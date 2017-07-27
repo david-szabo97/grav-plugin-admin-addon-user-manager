@@ -171,3 +171,28 @@
 .admin-addon-user-manager--list .user__actions {
   flex: 0 0 20%;
 }
+
+/**
+ * Filter
+ */
+.admin-addon-user-manager-filter {
+  display: flex;
+}
+
+.admin-addon-user-manager-filter__input {
+  flex: 1 0 auto;
+}
+
+.admin-addon-user-manager-filter__input .form-data {
+  padding-right: 1rem;
+}
+
+.admin-addon-user-manager-filter__help {
+  flex: 0 0 auto;
+  padding-right: 2rem;
+}
+
+#admin-main .admin-block .admin-addon-user-manager-filter__help .button {
+  padding-top: .425rem;
+  padding-bottom: .425rem;
+}

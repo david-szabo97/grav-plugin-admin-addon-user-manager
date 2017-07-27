@@ -32,15 +32,29 @@
   {% if not group %}
   <h1>Groups</h1>
 
-  <form method="get">
-    {% if filterException %}
-    <div class="notices red"><h2>Filter Error</h2><p>{{ filterException.message }}</p></div>
-    {% endif %}
-    <div class="block block-text">
-      {% set field = { style: 'vertical', size: '', placeholder: 'Filter groups', name: 'filter', default: filter } %}
-      {% include 'forms/fields/text/text.html.twig' %}
+  {% if filterException %}
+  <div class="notices red"><h2>Filter Error</h2><p>{{ filterException.message }}</p></div>
+  {% endif %}
+
+  <div class="admin-addon-user-manager-filter">
+    <div class="admin-addon-user-manager-filter__input">
+      <form method="get">
+        <div class="block block-text">
+          <div class="form-field vertical">
+            <div class="form-data" data-grav-default="{{ filter }}">
+              <div class="form-input-wrapper">
+                <input name="filter" value="{{ filter }}" type="text" placeholder="Filter groups">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-  </form>
+
+    <div class="admin-addon-user-manager-filter__help">
+      <a href="https://github.com/david-szabo97/grav-plugin-admin-addon-user-manager/blob/master/docs/filter.md" class="button" target="_new"><i class="fa fa-question"></i> {{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.HELP"|tu }}</a>
+    </div>
+  </div>
 
   <div class="admin-addon-user-manager admin-addon-user-manager--list admin-addon-user-manager--group">
     <div class="cell cell--header">

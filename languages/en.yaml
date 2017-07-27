@@ -4,3 +4,4 @@ PLUGIN_ADMIN_ADDON_USER_MANAGER:
   ICON: Icon
   ADD_GROUP: Add Group
   USERS: Users
+  HELP: Help
