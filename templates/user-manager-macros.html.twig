@@ -1,5 +1,5 @@
 {% macro pagination(pagination, url, ps) %}
-  {% if pagination.total > 0 %}
+  {% if pagination.count > 1 %}
     <div class="admin-addon-user-manager-pagination">
       <ul class="admin-addon-user-manager-pagination__pages">
         {% if pagination.current > 1 %}
