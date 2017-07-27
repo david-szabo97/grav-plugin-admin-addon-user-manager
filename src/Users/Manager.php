@@ -29,9 +29,13 @@ class Manager implements IManager {
    */
   private $accountDirCached = null;
 
+  public static $instance;
+
   public function __construct(Grav $grav, AdminAddonUserManagerPlugin $plugin) {
     $this->grav = $grav;
     $this->plugin = $plugin;
+
+    self::$instance = $this;
   }
 
   /**
@@ -201,6 +205,18 @@ class Manager implements IManager {
     }
 
     return $this->accountDirCached = $this->grav['locator']->findResource('account://');
+  }
+
+  public static function userNames() {
+    $instance = self::$instance;
+    $users = $instance->users();
+
+    $userNames = [];
+    foreach ($users as $u) {
+      $userNames[$u['username']] = $u['username'];
+    }
+
+    return $userNames;
   }
 
 }

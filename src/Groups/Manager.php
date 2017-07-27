@@ -10,6 +10,8 @@ use AdminAddonUserManager\Pagination\ArrayPagination;
 use \Grav\Common\Utils;
 use AdminAddonUserManager\Group;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use \Grav\Common\User\User;
+use \AdminAddonUserManager\Users\Manager as UsersManager;
 
 class Manager implements IManager, EventSubscriberInterface {
 
@@ -34,8 +36,29 @@ class Manager implements IManager, EventSubscriberInterface {
 
     if (preg_match('|group-manager/|', $type)) {
       $obj = Group::load(preg_replace('|group-manager/|', '', $type));
-      $obj->merge($_POST['data']);
+      $post = $_POST['data'];
+      $usersInGroup = $post['users'];
+      unset($post['users']);
+      $obj->merge($post);
       $e['data_type'] = $obj;
+
+      foreach (UsersManager::$instance->users() as $u) {
+        $groups = $u->get('groups', []);
+        if (in_array($u['username'], $usersInGroup)) {
+          if (!in_array($obj['groupname'], $groups)) {
+            $u['groups'] = array_merge($groups, [$obj['groupname']]);
+            $u->save();
+          }
+        } else {
+          if (in_array($obj['groupname'], $groups)) {
+            $u['groups'] = array_diff($groups, [$obj['groupname']]);
+            if (is_empty($u['groups'])) {
+              unset($u['groups']);
+            }
+            $u->save();
+          }
+        }
+      }
     }
   }
 
@@ -124,6 +147,13 @@ class Manager implements IManager, EventSubscriberInterface {
     if ($group) {
       $vars['exists'] = Group::groupExists($group);
       $vars['group'] = $group = Group::load($group);
+      $users = [];
+      foreach (UsersManager::$instance->users() as $u) {
+        if (in_array($group['groupname'], $u->get('groups', []))) {
+          $users[] = $u->username;
+        }
+      }
+      $group['users'] = $users;
     } else {
       $vars['fields'] = $this->plugin->getModalsConfiguration()['add_group']['fields'];
 
