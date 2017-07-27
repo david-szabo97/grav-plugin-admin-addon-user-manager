@@ -145,4 +145,18 @@ class Group extends Data {
     return true;
   }
 
+  public function authorize($access) {
+    if (empty($this->items)) {
+      return false;
+    }
+
+    if (!isset($this->items['access'])) {
+      return false;
+    }
+
+    $val = Utils::getDotNotation($this->items['access'], $access);
+
+    return Utils::isPositive($val) === true;
+  }
+
 }
