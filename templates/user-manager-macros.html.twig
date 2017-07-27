@@ -1,0 +1,29 @@
+{% macro pagination(pagination, url, ps) %}
+  <div class="admin-addon-user-manager-pagination">
+    <ul class="admin-addon-user-manager-pagination__pages">
+      {% if pagination.current > 1 %}
+      <li><a href="{{ url ~ '/page' ~ ps ~ '1' }}"><<</a></li>
+      {% endif %}
+      {% if pagination.current > 2 %}
+      <li><a href="{{ url ~ '/page' ~ ps ~ (pagination.current - 1) }}"><</a></li>
+      {% endif %}
+      {% set fromPage = (pagination.current - 2 < 1) ? 1 : pagination.current - 2 %}
+      {% set toPage = (pagination.current + 2 > pagination.count) ? pagination.count : pagination.current + 2 %}
+      {% for i in fromPage..toPage %}
+        {% if pagination.current == i %}
+          <li class="current">{{ i }}</li>
+        {% else %}
+          <li><a href="{{ url ~ '/page' ~ ps ~ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if pagination.current < pagination.count - 1 %}
+      <li><a href="{{ url ~ '/page' ~ ps ~ (pagination.current + 1) }}">></a></li>
+      {% endif %}
+      {% if pagination.current < pagination.count %}
+      <li><a href="{{ url ~ '/page' ~ ps ~ pagination.count }}">>></a></li>
+      {% endif %}
+    </ul>
+
+    <div class="admin-addon-user-manager-pagination__text">Showing {{ pagination.startOffset + 1 }} - {{ pagination.endOffset }} of {{ pagination.total }}</div>
+  </div>
+{% endmacro %}
