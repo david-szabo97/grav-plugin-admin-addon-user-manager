@@ -51,7 +51,7 @@ class ArrayPagination implements Pagination {
     $endOffset = $this->getStartOffset() + $this->getRowsPerPage();
 
     if ($endOffset > $this->getRowsCount()) {
-      $endOffset = $this->getRowsPerPage() - 1;
+      $endOffset = $this->getRowsCount();
     }
 
     return $endOffset;
