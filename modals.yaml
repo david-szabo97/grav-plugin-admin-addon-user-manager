@@ -1,0 +1,22 @@
+add_user:
+  fields:
+  - type: section
+    title: PLUGIN_ADMIN.ADD_ACCOUNT
+
+  - type: text
+    label: PLUGIN_ADMIN.USERNAME
+    help: PLUGIN_ADMIN.USERNAME_HELP
+    name: username
+    validate:
+      required: true
+
+add_group:
+  fields:
+  - type: section
+    title: PLUGIN_ADMIN_ADDON_USER_MANAGER.ADD_GROUP
+
+  - type: text
+    label: PLUGIN_ADMIN.NAME
+    name: name
+    validate:
+      required: true

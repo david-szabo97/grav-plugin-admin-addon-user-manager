@@ -119,7 +119,7 @@ class Manager implements IManager {
     $twig = $this->grav['twig'];
     $uri = $this->grav['uri'];
 
-    $vars['fields'] = $this->plugin->getBlueprint()['modals']['add_user']['fields'];
+    $vars['fields'] = $this->plugin->getModalsConfiguration()['add_user']['fields'];
 
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');

@@ -5,6 +5,7 @@ use Grav\Common\Plugin;
 use RocketTheme\Toolbox\Event\Event;
 use \Grav\Common\Utils;
 use \Grav\Common\User\User;
+use Grav\Common\File\CompiledYamlFile;
 use AdminAddonUserManager\Users\Manager as UsersManager;
 
 class AdminAddonUserManagerPlugin extends Plugin {
@@ -44,6 +45,10 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
   public function getPreviousUrl() {
     return $this->grav['session']->{self::SLUG . '.previous_url'};
+  }
+
+  public function getModalsConfiguration() {
+    return CompiledYamlFile::instance(__DIR__ . DS . 'modals.yaml')->content();
   }
 
   public static function getSubscribedEvents() {
