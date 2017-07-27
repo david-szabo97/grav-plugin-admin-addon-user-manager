@@ -1,1 +1,4 @@
 enabled: true
+default_list_style: list
+pagination:
+  per_page: 20
