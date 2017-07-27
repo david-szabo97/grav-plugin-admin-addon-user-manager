@@ -170,7 +170,7 @@ class Manager implements IManager, EventSubscriberInterface {
       }
 
       // Filtering
-       $filterException = false;
+      $filterException = false;
       $filter = (empty($_GET['filter'])) ? '' : $_GET['filter'];
       $vars['filter'] = $filter;
       if ($filter) {
