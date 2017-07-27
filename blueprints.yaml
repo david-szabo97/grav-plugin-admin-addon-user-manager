@@ -1,6 +1,6 @@
 name: Admin Addon User Manager
-version: 1.3.4
-description: A simple admin panel extension which adds the option to manage users
+version: 1.4.0
+description: A simple admin panel extension which adds the option to manage users and groups
 icon: plug
 author:
   name: Dávid Szabó
