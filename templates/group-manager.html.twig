@@ -14,11 +14,11 @@
   <h1><i class="fa fa-fw fa-user-o"></i> Manage Groups</h1>
   {% else %}
   <div class="button-bar">
-      <a class="button" href="{{ base_url }}/group-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
-      <button class="button" type="submit" name="task" value="save" form="blueprints"><i class="fa fa-check"></i> {{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
-      {% if exists %}
-      <a class="button disable-after-click" href="{{ uri.addNonce(uri.route(true) ~ '/task' ~ config.system.param_sep ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="page-delete" ><i class="fa fa-close"></i> {{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
-      {% endif %}
+    <a class="button" href="{{ base_url }}/group-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
+    <button class="button" type="submit" name="task" value="save" form="blueprints"><i class="fa fa-check"></i> {{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
+    {% if exists %}
+    <a class="button disable-after-click" href="{{ uri.addNonce(uri.route(true) ~ '/task' ~ config.system.param_sep ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="page-delete" ><i class="fa fa-close"></i> {{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
+    {% endif %}
   </div>
   <h1><i class="fa fa-fw fa-user"></i> {{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP"|tu }}: {{ group.groupname|e }}</h1>
   {% endif %}
