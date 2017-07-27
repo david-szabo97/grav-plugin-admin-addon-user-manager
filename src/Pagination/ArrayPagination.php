@@ -9,6 +9,9 @@ class ArrayPagination implements Pagination {
   protected $rowsPerPage;
   protected $page;
 
+  private $rowsCount = null;
+  private $slicedData = null;
+
   public function __construct($data, $rowsPerPage = 10) {
     $this->data = $data;
     $this->rowsPerPage = $rowsPerPage;
@@ -25,6 +28,8 @@ class ArrayPagination implements Pagination {
     }
 
     $this->page = $page;
+
+    $this->slicedData = null;
   }
 
   public function getRowsPerPage() {
@@ -32,7 +37,11 @@ class ArrayPagination implements Pagination {
   }
 
   public function getRowsCount() {
-    return count($this->data);
+    if ($this->rowsCount !== null) {
+      return $this->rowsCount;
+    }
+
+    return $this->rowsCount = count($this->data);
   }
 
   public function getCurrentPage() {
@@ -62,7 +71,11 @@ class ArrayPagination implements Pagination {
   }
 
   public function getPaginatedRows() {
-    return array_slice($this->data, $this->getStartOffset(), $this->getRowsPerPage());
+    if ($this->slicedData !== null) {
+      return $this->slicedData;
+    }
+
+    return $this->slicedData = array_slice($this->data, $this->getStartOffset(), $this->getRowsPerPage());
   }
 
 }
