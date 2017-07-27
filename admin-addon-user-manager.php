@@ -62,6 +62,8 @@ class AdminAddonUserManagerPlugin extends Plugin {
       return;
     }
 
+    $this->grav['locator']->addPath('blueprints', '', __DIR__ . DS . 'blueprints');
+
     include __DIR__ . DS . 'src' . DS . 'Manager.php';
     include __DIR__ . DS . 'src' . DS . 'Pagination' . DS . 'Pagination.php';
     include __DIR__ . DS . 'src' . DS . 'Pagination' . DS . 'ArrayPagination.php';
