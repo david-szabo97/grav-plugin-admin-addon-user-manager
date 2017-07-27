@@ -45,7 +45,7 @@ class Manager implements IManager, EventSubscriberInterface {
    * @return string
    */
   public function getRequiredPermission() {
-    return 'admin.groups';
+    return 'admin_addon_user_manager.groups';
   }
 
   /**

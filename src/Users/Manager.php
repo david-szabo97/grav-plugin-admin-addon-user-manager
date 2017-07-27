@@ -40,7 +40,7 @@ class Manager implements IManager {
    * @return string
    */
   public function getRequiredPermission() {
-    return 'admin.users';
+    return 'admin_addon_user_manager.users';
   }
 
   /**

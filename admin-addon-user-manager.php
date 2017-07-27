@@ -82,6 +82,8 @@ class AdminAddonUserManagerPlugin extends Plugin {
       'onAssetsInitialized' => ['onAssetsInitialized', 0],
       'onAdminTaskExecute' => ['onAdminTaskExecute', 0],
     ]);
+
+    $this->registerPermissions();
   }
 
   public function onAssetsInitialized() {
@@ -115,7 +117,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
     $uri = $this->grav['uri'];
 
     foreach ($this->managers as $manager) {
-      if ($page->slug() === $manager->getLocation()) {
+      if ($page->slug() === $manager->getLocation() && $this->grav['admin']->authorize(['admin.super', $manager->getRequiredPermission()])) {
         $session->{self::SLUG . '.previous_url'} = $uri->route() . $uri->params();
 
         $page = $this->grav['admin']->page(true);
@@ -131,14 +133,22 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
   public function onAdminTaskExecute($e) {
     foreach ($this->managers as $manager) {
-      $result = $manager->handleTask($e);
+      if ($this->grav['admin']->authorize(['admin.super', $manager->getRequiredPermission()])) {
+        $result = $manager->handleTask($e);
 
-      if ($result) {
-        return true;
+        if ($result) {
+          return true;
+        }
       }
     }
 
     return false;
+  }
+
+  public function registerPermissions() {
+    foreach ($this->managers as $manager) {
+      $this->grav['admin']->addPermissions([$manager->getRequiredPermission() => 'boolean']);
+    }
   }
 
 }
