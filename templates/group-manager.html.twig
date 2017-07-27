@@ -73,6 +73,8 @@
     }
   </script>
   {% else %}
+  <h1>{{ group.readableName }}</h1>
+
   {% include 'partials/blueprints.html.twig' with { data: group, blueprints: group.blueprints } %}
 
   <div class="remodal" data-remodal-id="changes">
