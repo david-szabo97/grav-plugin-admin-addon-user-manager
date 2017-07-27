@@ -1,3 +1,9 @@
+# v1.4.1
+##  07/27/2017
+
+1. [](#improved)
+    * Permissions support
+
 # v1.4.0
 ##  07/27/2017
 
