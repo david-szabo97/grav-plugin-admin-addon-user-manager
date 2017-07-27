@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "AdminAddonUserManager\\": "src/"
+        }
+    },
+    "require": {
+        "symfony/expression-language": "^3.3"
+    }
+}
