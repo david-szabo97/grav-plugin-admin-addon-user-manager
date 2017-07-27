@@ -1,3 +1,10 @@
+# v1.4.3
+##  07/27/2017
+
+1. [](#new)
+    * Users count are now shown at group manager
+    * Users now can be added and/or removed from the group you are currently editing
+
 # v1.4.2
 ##  07/27/2017
 
