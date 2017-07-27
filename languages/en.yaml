@@ -1,1 +1,4 @@
 PLUGIN_ADMIN_ADDON_USER_MANAGER:
+  GROUP: Group
+  READABLE_NAME: Readable name
+  ICON: Icon
