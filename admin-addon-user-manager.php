@@ -7,6 +7,7 @@ use \Grav\Common\Utils;
 use \Grav\Common\User\User;
 use Grav\Common\File\CompiledYamlFile;
 use AdminAddonUserManager\Users\Manager as UsersManager;
+use AdminAddonUserManager\Groups\Manager as GroupsManager;
 
 class AdminAddonUserManagerPlugin extends Plugin {
 
@@ -64,12 +65,15 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     $this->grav['locator']->addPath('blueprints', '', __DIR__ . DS . 'blueprints');
 
+    include __DIR__ . DS . 'src' . DS . 'Group.php';
     include __DIR__ . DS . 'src' . DS . 'Manager.php';
     include __DIR__ . DS . 'src' . DS . 'Pagination' . DS . 'Pagination.php';
     include __DIR__ . DS . 'src' . DS . 'Pagination' . DS . 'ArrayPagination.php';
     include __DIR__ . DS . 'src' . DS . 'Users' . DS . 'Manager.php';
+    include __DIR__ . DS . 'src' . DS . 'Groups' . DS . 'Manager.php';
 
     $this->managers[] = new UsersManager($this->grav, $this);
+    $this->managers[] = new GroupsManager($this->grav, $this);
 
     $this->enable([
       'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', -10],
