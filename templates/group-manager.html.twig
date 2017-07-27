@@ -57,22 +57,27 @@
   </div>
 
   <div class="admin-addon-user-manager admin-addon-user-manager--list admin-addon-user-manager--group">
-    <div class="cell cell--header">
-      <div class="user">
-        <div class="user__username">Name</div>
-        <div class="user__actions">Actions</div>
-      </div>
-    </div>
-    {% for groupName, group in groups %}
-    <div class="cell">
-      <div class="user">
-        <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
-        <div class="user__actions">
-          <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+    {% if groups is empty %}
+      <h2>No results</h2>
+    {% else %}
+      <div class="cell cell--header">
+        <div class="user">
+          <div class="user__username">Name</div>
+          <div class="user__actions">Actions</div>
         </div>
       </div>
-    </div>
-    {% endfor %}
+
+      {% for groupName, group in groups %}
+      <div class="cell">
+        <div class="user">
+          <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
+          <div class="user__actions">
+            <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
   </div>
 
   {{ macros.pagination(pagination, uri.route(true), ps, appendUrl) }}

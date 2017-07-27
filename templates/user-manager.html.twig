@@ -47,29 +47,33 @@
   </div>
 
   <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
-    {% if style == 'list' %}
-    <div class="cell cell--header">
-      <div class="user">
-        <div class="user__username">Username</div>
-        <div class="user__email">Email</div>
-        <div class="user__actions">Actions</div>
-      </div>
-    </div>
-    {% endif %}
-    {% for user in users %}
-    <div class="cell">
-      <div class="user">
-        {% if style == 'grid' %}
-        <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
-        {% endif %}
-        <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
-        <div class="user__email">{{ user.email }}</div>
-        <div class="user__actions">
-          <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+    {% if users is empty %}
+      <h2>No results</h2>
+    {% else %}
+      {% if style == 'list' %}
+      <div class="cell cell--header">
+        <div class="user">
+          <div class="user__username">Username</div>
+          <div class="user__email">Email</div>
+          <div class="user__actions">Actions</div>
         </div>
       </div>
-    </div>
-    {% endfor %}
+      {% endif %}
+      {% for user in users %}
+      <div class="cell">
+        <div class="user">
+          {% if style == 'grid' %}
+          <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
+          {% endif %}
+          <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
+          <div class="user__email">{{ user.email }}</div>
+          <div class="user__actions">
+            <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
   </div>
 
   {{ macros.pagination(pagination, uri.route(true) ~ '/listStyle' ~ ps ~ listStyle, ps, appendUrl) }}
