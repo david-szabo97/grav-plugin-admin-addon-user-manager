@@ -9,6 +9,7 @@ use AdminAddonUserManager\Manager as IManager;
 use AdminAddonUserManager\Pagination\ArrayPagination;
 use \Grav\Common\Utils;
 use \Grav\Common\User\User;
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class Manager implements IManager {
 
@@ -132,9 +133,33 @@ class Manager implements IManager {
     }
     $vars['listStyle'] = $listStyle;
 
+    $users = $this->users();
+
+    // Filtering
+    $filterException = false;
+    $filter = (empty($_GET['filter'])) ? '' : $_GET['filter'];
+    $vars['filter'] = $filter;
+    if ($filter) {
+      try {
+        $language = new ExpressionLanguage();
+        foreach ($users as $k => $user) {
+          if (!$language->evaluate($_GET['filter'], ['user' => $user])) {
+            unset($users[$k]);
+          }
+        }
+      } catch (\Exception $exception) {
+        $vars['filterException'] = $exception;
+        $filterException = true;
+      }
+    }
+
+    if ($filterException) {
+      $users = [];
+    }
+
     // Pagination
     $perPage = $this->plugin->getPluginConfigValue('pagination.per_page', 10);
-    $pagination = new ArrayPagination($this->users(), $perPage);
+    $pagination = new ArrayPagination($users, $perPage);
     $pagination->paginate($uri->param('page'));
 
     $vars['pagination'] = [

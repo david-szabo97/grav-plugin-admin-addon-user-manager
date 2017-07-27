@@ -9,14 +9,27 @@
   <h1><i class="fa fa-fw fa-user-o"></i> Manage Users</h1>
 {% endblock %}
 
+{% set ps = config.system.param_sep %}
+{% set appendUrl = '?filter=' ~ filter|url_encode %}
+
 {% block content %}
   {% set style = listStyle|default('grid') %}
 
   <h1>Users</h1>
 
+  <form method="get">
+    {% if filterException %}
+    <div class="notices red"><h2>Filter Error</h2><p>{{ filterException.message }}</p></div>
+    {% endif %}
+    <div class="block block-text">
+      {% set field = { style: 'vertical', size: '', placeholder: 'Filter users', name: 'filter', default: filter } %}
+      {% include 'forms/fields/text/text.html.twig' %}
+    </div>
+  </form>
+
   <div class="admin-addon-user-manager-style">
-    {% if style != 'grid' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'grid' ~ '/page' ~ config.system.param_sep ~ pagination.current }}/"><i class="fa fa-th"></i></a>{% else %}<i class="fa fa-th"></i>{% endif %}
-    {% if style != 'list' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ 'list' ~ '/page' ~ config.system.param_sep ~ pagination.current }}"><i class="fa fa-list"></i></a>{% else %}<i class="fa fa-list"></i>{% endif %}
+    {% if style != 'grid' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ ps ~ 'grid' ~ '/page' ~ ps ~ pagination.current ~ appendUrl }}"><i class="fa fa-th"></i></a>{% else %}<i class="fa fa-th"></i>{% endif %}
+    {% if style != 'list' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ ps ~ 'list' ~ '/page' ~ ps ~ pagination.current ~ appendUrl }}"><i class="fa fa-list"></i></a>{% else %}<i class="fa fa-list"></i>{% endif %}
   </div>
 
   <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
@@ -38,14 +51,14 @@
         <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
         <div class="user__email">{{ user.email }}</div>
         <div class="user__actions">
-          <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ config.system.param_sep ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+          <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
         </div>
       </div>
     </div>
     {% endfor %}
   </div>
 
-  {{ macros.pagination(pagination, uri.route(true) ~ '/listStyle' ~ config.system.param_sep ~ listStyle, config.system.param_sep) }}
+  {{ macros.pagination(pagination, uri.route(true) ~ '/listStyle' ~ ps ~ listStyle, ps, appendUrl) }}
 
   <div class="remodal" data-remodal-id="modal-admin-addon-user-manager-new" data-remodal-options="hashTracking: false">
     <form method="post" onsubmit='handleAdminAddonUserManagerSubmit(this); return false;'>
