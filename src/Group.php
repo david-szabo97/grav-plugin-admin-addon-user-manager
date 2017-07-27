@@ -16,9 +16,18 @@ class Group extends Data
      *
      * @return array
      */
-    private static function groups()
+    public static function groups()
     {
         $groups = Grav::instance()['config']->get('groups');
+
+        $blueprints = new Blueprints;
+        $blueprint = $blueprints->get('user/group');
+        foreach ($groups as $groupname => &$content) {
+            if (!isset($content['groupname'])) {
+                $content['groupname'] = $groupname;
+            }
+            $content = new Group($content, $blueprint);
+        }
 
         return $groups;
     }
@@ -61,17 +70,13 @@ class Group extends Data
     public static function load($groupname)
     {
         if (self::groupExists($groupname)) {
-            $content = self::groups()[$groupname];
+            $group = self::groups()[$groupname];
         } else {
+            $blueprints = new Blueprints;
+            $blueprint = $blueprints->get('user/group');
             $content = [];
+            $group = new Group($content, $blueprint);
         }
-
-        $blueprints = new Blueprints;
-        $blueprint = $blueprints->get('user/group');
-        if (!isset($content['groupname'])) {
-            $content['groupname'] = $groupname;
-        }
-        $group = new Group($content, $blueprint);
 
         return $group;
     }
