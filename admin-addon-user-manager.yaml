@@ -1,13 +1,1 @@
 enabled: true
-
-modal:
-  fields:
-  - type: section
-    title: PLUGIN_ADMIN.ADD_ACCOUNT
-
-  - type: text
-    label: PLUGIN_ADMIN.USERNAME
-    help: PLUGIN_ADMIN.USERNAME_HELP
-    name: username
-    validate:
-      required: true

@@ -106,7 +106,10 @@ class AdminAddonUserManagerPlugin extends Plugin {
     foreach ($this->managers as $manager) {
       if ($page->slug() === $manager->getLocation()) {
         $session->{self::SLUG . '.previous_url'} = $uri->route() . $uri->params();
-        
+
+        $page = $this->grav['admin']->page(true);
+        $twig->twig_vars['context'] = $page;
+
         $vars = $manager->handleRequest();
         $twig->twig_vars = array_merge($twig->twig_vars, $vars);
 
