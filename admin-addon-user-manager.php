@@ -118,7 +118,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
   public function onAdminTaskExecute($e) {
     foreach ($this->managers as $manager) {
       $result = $manager->handleTask($e);
-      
+
       if ($result) {
         return true;
       }

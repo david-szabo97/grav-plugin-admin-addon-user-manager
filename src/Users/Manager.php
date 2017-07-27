@@ -46,7 +46,7 @@ class Manager implements IManager {
   /**
    * Returns the location of the manager
    * It will be accessible at this path
-   * 
+   *
    * @return string
    */
   public function getLocation() {
