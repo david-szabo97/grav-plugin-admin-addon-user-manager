@@ -39,8 +39,12 @@ class Manager implements IManager, EventSubscriberInterface {
     if (preg_match('|group-manager/|', $type)) {
       $obj = Group::load(preg_replace('|group-manager/|', '', $type));
       $post = $_POST['data'];
-      $usersInGroup = $post['users'];
-      unset($post['users']);
+      if (isset($post['users'])) {
+        $usersInGroup = $post['users'];
+        unset($post['users']);
+      } else {
+        $usersInGroup = [];
+      }
       $obj->merge($post);
       $e['data_type'] = $obj;
 
