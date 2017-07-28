@@ -53,6 +53,7 @@
       {% if style == 'list' %}
       <div class="cell cell--header">
         <div class="user">
+          <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
           <div class="user__username">Username</div>
           <div class="user__email">Email</div>
           <div class="user__actions">Actions</div>
@@ -64,6 +65,8 @@
         <div class="user">
           {% if style == 'grid' %}
           <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
+          {% else %}
+          <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
           {% endif %}
           <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
           <div class="user__email">{{ user.email }}</div>
@@ -100,5 +103,13 @@
       var username = form.querySelector('[name=username]').value;
       window.location = '{{ base_url }}/user/' + username;
     }
+
+    var selectAllEle = document.getElementById('selectAll');
+    var selectEles = document.querySelectorAll('input[name="selected[]"]');
+    selectAllEle.addEventListener('change', function(e) {
+      for (var i = 0; i < selectEles.length; i++) {
+        selectEles[i].checked = this.checked;
+      }
+    });
   </script>
 {% endblock %}

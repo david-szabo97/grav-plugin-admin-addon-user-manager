@@ -62,6 +62,7 @@
     {% else %}
       <div class="cell cell--header">
         <div class="user">
+          <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
           <div class="user__username">Name</div>
           <div class="user__actions">Actions</div>
         </div>
@@ -70,6 +71,7 @@
       {% for groupName, group in groups %}
       <div class="cell">
         <div class="user">
+          <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
           <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
           <div class="user__actions">
             <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
@@ -104,6 +106,14 @@
       var name = form.querySelector('[name=name]').value;
       window.location = '{{ base_url }}/group-manager/' + name;
     }
+
+    var selectAllEle = document.getElementById('selectAll');
+    var selectEles = document.querySelectorAll('input[name="selected[]"]');
+    selectAllEle.addEventListener('change', function(e) {
+      for (var i = 0; i < selectEles.length; i++) {
+        selectEles[i].checked = this.checked;
+      }
+    });
   </script>
   {% else %}
   <h1>{{ group.readableName ?: group.groupname }}</h1>

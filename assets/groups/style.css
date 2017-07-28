@@ -1,3 +1,3 @@
 .admin-addon-user-manager--group.admin-addon-user-manager--list .user__username {
-  flex: 1 0 80%;
+  flex: 1 0 auto;
 }

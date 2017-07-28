@@ -165,12 +165,16 @@
   padding: 0 8px;
 }
 
+.admin-addon-user-manager--list .user__checkbox {
+  flex: 0 0 auto;
+}
+
 .admin-addon-user-manager--list .user__username {
   flex: 0 0 25%;
 }
 
 .admin-addon-user-manager--list .user__email {
-  flex: 1 0 55%;
+  flex: 1 0 auto;
 }
 
 .admin-addon-user-manager--list .user__actions {
