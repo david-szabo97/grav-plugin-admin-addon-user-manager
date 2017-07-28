@@ -70,7 +70,7 @@ class Group extends Data {
     } else {
       $blueprints = new Blueprints;
       $blueprint = $blueprints->get('user/group');
-      $content = [];
+      $content = ['groupname' => $groupname];
       $group = new Group($content, $blueprint);
     }
 
