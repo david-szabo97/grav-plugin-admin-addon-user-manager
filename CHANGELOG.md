@@ -1,3 +1,9 @@
+# v1.5.2
+##  07/28/2017
+
+1. [](#bugfix)
+    * Fixed an error which appeared when there are no groups.yaml
+
 # v1.5.1
 ##  07/28/2017
 
