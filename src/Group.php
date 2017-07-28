@@ -112,9 +112,8 @@ class Group extends Data {
     }
 
     $type = 'groups';
-    $blueprints = $this->blueprints("config/{$type}");
-    $obj = new Data($config->get($type), $blueprints);
-    $file = CompiledYamlFile::instance($grav['locator']->findResource("config://{$type}.yaml"));
+    $obj = new Data($config->get($type), $blueprint);
+    $file = CompiledYamlFile::instance($grav['locator']->findResource('config://') . DS . "{$type}.yaml");
     $obj->file($file);
     $obj->save();
   }
@@ -132,9 +131,12 @@ class Group extends Data {
     $blueprints = new Blueprints;
     $blueprint = $blueprints->get('user/group');
 
-    $groups = $config->get("groups");
+    $groups = $config->get('groups', []);
+    if (!isset($groups[$groupname])) {
+      return false;
+    }
     unset($groups[$groupname]);
-    $config->set("groups", $groups);
+    $config->set('groups', $groups);
 
     $type = 'groups';
     $obj = new Data($config->get($type), $blueprint);
