@@ -1,3 +1,9 @@
+# v1.5.4
+##  07/28/2017
+
+1. [](#bugfix)
+    * Fixed groups.yaml is not created when saving a group for the first time
+
 # v1.5.3
 ##  07/28/2017
 
