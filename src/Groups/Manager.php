@@ -70,7 +70,7 @@ class Manager implements IManager, EventSubscriberInterface {
    * @return string
    */
   public function getRequiredPermission() {
-    return 'admin_addon_user_manager.groups';
+    return $this->plugin->name . '.groups';
   }
 
   /**
@@ -107,7 +107,7 @@ class Manager implements IManager, EventSubscriberInterface {
    * @return void
    */
   public function initializeAssets(Assets $assets) {
-    $this->grav['assets']->addCss('plugin://' . $this->plugin::SLUG . '/assets/groups/style.css');
+    $this->grav['assets']->addCss('plugin://' . $this->plugin->name . '/assets/groups/style.css');
   }
 
   /**

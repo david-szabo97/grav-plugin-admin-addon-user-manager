@@ -46,7 +46,7 @@ class Manager implements IManager {
    * @return string
    */
   public function getRequiredPermission() {
-    return 'admin_addon_user_manager.users';
+    return $this->plugin->name . '.users';
   }
 
   /**
@@ -83,7 +83,7 @@ class Manager implements IManager {
    * @return void
    */
   public function initializeAssets(Assets $assets) {
-    $this->grav['assets']->addCss('plugin://' . $this->plugin::SLUG . '/assets/users/style.css');
+    $this->grav['assets']->addCss('plugin://' . $this->plugin->name . '/assets/users/style.css');
   }
 
   /**
@@ -191,7 +191,7 @@ class Manager implements IManager {
 
     // Try cache
     $cache =  $this->grav['cache'];
-    $cacheKey = $this->plugin::SLUG . '.users';
+    $cacheKey = $this->plugin->name . '.users';
 
     $modifyTime = filemtime($dir);
     $usersCache = $cache->fetch($cacheKey);
@@ -218,7 +218,7 @@ class Manager implements IManager {
 
   private function saveUsersToCache($users) {
     $cache =  $this->grav['cache'];
-    $cacheKey = $this->plugin::SLUG . '.users';
+    $cacheKey = $this->plugin->name . '.users';
     $dir = $this->getAccountDir();
     $modifyTime = filemtime($dir);
 

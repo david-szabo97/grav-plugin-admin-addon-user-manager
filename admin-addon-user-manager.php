@@ -12,26 +12,13 @@ use AdminAddonUserManager\Groups\Manager as GroupsManager;
 class AdminAddonUserManagerPlugin extends Plugin {
 
   /**
-   * Slug is used to determine configuration, cache keys and assets location
-   */
-  const SLUG = 'admin-addon-user-manager';
-
-  /**
-   * The location of the user manager
-   * /your/site/admin/PAGE_LOCATION
-   */
-  const PAGE_LOCATION = 'user-manager';
-
-  private $managers = [];
-
-  /**
    * Returns the plugin's configuration key
    *
    * @param String $key
    * @return String
    */
   public function getPluginConfigKey($key = null) {
-    $pluginKey = 'plugins.' . self::SLUG;
+    $pluginKey = 'plugins.' . $this->name;
 
     return ($key !== null) ? $pluginKey . '.' . $key : $pluginKey;
   }
@@ -45,7 +32,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
   }
 
   public function getPreviousUrl() {
-    return $this->grav['session']->{self::SLUG . '.previous_url'};
+    return $this->grav['session']->{$this->name . '.previous_url'};
   }
 
   public function getModalsConfiguration() {
@@ -113,7 +100,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     foreach ($this->managers as $manager) {
       if ($page->slug() === $manager->getLocation() && $this->grav['admin']->authorize(['admin.super', $manager->getRequiredPermission()])) {
-        $session->{self::SLUG . '.previous_url'} = $uri->route() . $uri->params();
+        $session->{$this->name . '.previous_url'} = $uri->route() . $uri->params();
 
         $page = $this->grav['admin']->page(true);
         $twig->twig_vars['context'] = $page;
