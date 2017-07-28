@@ -1,3 +1,9 @@
+# v1.5.1
+##  07/28/2017
+
+1. [](#bugfix)
+    * Better PHP compatibility
+
 # v1.5.0
 ##  07/28/2017
 
