@@ -17,7 +17,7 @@ class Group extends Data {
    * @return array
    */
   public static function groups() {
-    $groups = Grav::instance()['config']->get('groups');
+    $groups = Grav::instance()['config']->get('groups', []);
 
     $blueprints = new Blueprints;
     $blueprint = $blueprints->get('user/group');
