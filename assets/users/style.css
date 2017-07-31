@@ -205,3 +205,18 @@
   padding-top: .425rem;
   padding-bottom: .425rem;
 }
+
+/**
+ * Bulk
+ */
+.admin-addon-user-manager-bulk-action {
+  margin-left: 16px;
+}
+
+.button.warning:hover {
+  background: red;
+}
+
+.remodal[data-remodal-id="modal-admin-addon-user-manager-bulk"] input[type="checkbox"] {
+  display: none;
+}

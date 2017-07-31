@@ -46,38 +46,44 @@
     {% if style != 'list' %}<a href="{{ uri.route(true) ~ '/listStyle' ~ ps ~ 'list' ~ '/page' ~ ps ~ pagination.current ~ appendUrl }}"><i class="fa fa-list"></i></a>{% else %}<i class="fa fa-list"></i>{% endif %}
   </div>
 
-  <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
-    {% if users is empty %}
-      <h2>No results</h2>
-    {% else %}
-      {% if style == 'list' %}
-      <div class="cell cell--header">
-        <div class="user">
-          <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
-          <div class="user__username">Username</div>
-          <div class="user__email">Email</div>
-          <div class="user__actions">Actions</div>
-        </div>
-      </div>
-      {% endif %}
-      {% for user in users %}
-      <div class="cell">
-        <div class="user">
-          {% if style == 'grid' %}
-          <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
-          {% else %}
-          <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
-          {% endif %}
-          <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
-          <div class="user__email">{{ user.email }}</div>
-          <div class="user__actions">
-            <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+  <form method="post">
+    <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
+      {% if users is empty %}
+        <h2>No results</h2>
+      {% else %}
+          {% if style == 'list' %}
+          <div class="cell cell--header">
+            <div class="user">
+              <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
+              <div class="user__username">Username</div>
+              <div class="user__email">Email</div>
+              <div class="user__actions">Actions</div>
+            </div>
           </div>
-        </div>
-      </div>
-      {% endfor %}
-    {% endif %}
-  </div>
+          {% endif %}
+          {% for user in users %}
+          <div class="cell">
+            <div class="user">
+              {% if style == 'grid' %}
+              <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
+              {% else %}
+              <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
+              {% endif %}
+              <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
+              <div class="user__email">{{ user.email }}</div>
+              <div class="user__actions">
+                <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="admin-addon-user-manager-bulk-action">
+      <a data-remodal-target="modal-admin-addon-user-manager-bulk" class="button">Bulk action</a>
+    </div>
+  </form>
 
   {{ macros.pagination(pagination, uri.route(true) ~ '/listStyle' ~ ps ~ listStyle, ps, appendUrl) }}
 
@@ -85,7 +91,25 @@
     <form method="post" onsubmit='handleAdminAddonUserManagerSubmit(this); return false;'>
       {% for field in fields %}
         {% if field.type %}
-          {% set value = data.value(field.name) %}
+          <div class="block block-{{field.type}}">
+            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="button-bar">
+        <button class="button primary" >{{ "PLUGIN_ADMIN.CONTINUE"|tu }}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="remodal" data-remodal-id="modal-admin-addon-user-manager-bulk" data-remodal-options="hashTracking: false">
+    <form method="post" onsubmit='handleAdminAddonUserManagerBulkSubmit(this);'>
+      {% for field in bulkFields %}
+        {% if field.type %}
+          {% if field.name == 'groups' %}
+          {% set field = field|merge({options: groupnames}) %}
+          {% endif %}
           <div class="block block-{{field.type}}">
             {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
           </div>
@@ -111,5 +135,11 @@
         selectEles[i].checked = this.checked;
       }
     });
+
+    function handleAdminAddonUserManagerBulkSubmit(form) {
+      for (var i = 0; i < selectEles.length; i++) {
+        form.appendChild(selectEles[i]);
+      }
+    }
   </script>
 {% endblock %}

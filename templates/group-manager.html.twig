@@ -56,31 +56,37 @@
     </div>
   </div>
 
-  <div class="admin-addon-user-manager admin-addon-user-manager--list admin-addon-user-manager--group">
-    {% if groups is empty %}
-      <h2>No results</h2>
-    {% else %}
-      <div class="cell cell--header">
-        <div class="user">
-          <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
-          <div class="user__username">Name</div>
-          <div class="user__actions">Actions</div>
-        </div>
-      </div>
-
-      {% for groupName, group in groups %}
-      <div class="cell">
-        <div class="user">
-          <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
-          <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
-          <div class="user__actions">
-            <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+  <form method="post">
+    <div class="admin-addon-user-manager admin-addon-user-manager--list admin-addon-user-manager--group">
+      {% if groups is empty %}
+        <h2>No results</h2>
+      {% else %}
+        <div class="cell cell--header">
+          <div class="user">
+            <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
+            <div class="user__username">Name</div>
+            <div class="user__actions">Actions</div>
           </div>
         </div>
-      </div>
-      {% endfor %}
-    {% endif %}
-  </div>
+
+        {% for groupName, group in groups %}
+        <div class="cell">
+          <div class="user">
+            <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ groupName }}" /></div>
+            <div class="user__username"><a href="{{ uri.route(true) ~ '/' ~ groupName }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
+            <div class="user__actions">
+              <a href="{{ uri.addNonce(uri.route(true) ~ '/' ~ groupName ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="admin-addon-user-manager-bulk-action">
+      <a data-remodal-target="modal-admin-addon-user-manager-bulk" class="button">Bulk action</a>
+    </div>
+  </form>
 
   {{ macros.pagination(pagination, uri.route(true), ps, appendUrl) }}
 
@@ -89,6 +95,22 @@
       {% for field in fields %}
         {% if field.type %}
           {% set value = data.value(field.name) %}
+          <div class="block block-{{field.type}}">
+            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="button-bar">
+        <button class="button primary" >{{ "PLUGIN_ADMIN.CONTINUE"|tu }}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="remodal" data-remodal-id="modal-admin-addon-user-manager-bulk" data-remodal-options="hashTracking: false">
+    <form method="post" onsubmit='handleAdminAddonUserManagerBulkSubmit(this);'>
+      {% for field in bulkFields %}
+        {% if field.type %}
           <div class="block block-{{field.type}}">
             {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
           </div>
@@ -114,6 +136,12 @@
         selectEles[i].checked = this.checked;
       }
     });
+
+    function handleAdminAddonUserManagerBulkSubmit(form) {
+      for (var i = 0; i < selectEles.length; i++) {
+        form.appendChild(selectEles[i]);
+      }
+    }
   </script>
   {% else %}
   <h1>{{ group.readableName ?: group.groupname }}</h1>
