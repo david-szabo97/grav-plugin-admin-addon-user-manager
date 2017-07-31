@@ -96,18 +96,9 @@ class Manager implements IManager {
     $method = $event['method'];
 
     if ($method === 'taskUserDelete') {
-      $page = $this->grav['admin']->page(true);
       $username = $this->grav['uri']->paths()[2];
-      $user = User::load($username);
-
-      if ($user->file()->exists()) {
-        $users = $this->users();
-        $user->file()->delete();
-        // Prevent users cache refresh
-        unset($users[$username]);
-        $this->saveUsersToCache($users);
+      if ($this->removeUser($username)) {
         $this->grav->redirect($this->plugin->getPreviousUrl());
-        return true;
       }
     }
 
@@ -236,6 +227,21 @@ class Manager implements IManager {
     }
 
     return $this->accountDirCached = $this->grav['locator']->findResource('account://');
+  }
+
+  public function removeUser($username) {
+    $user = User::load($username);
+
+    if ($user->file()->exists()) {
+      $users = $this->users();
+      $user->file()->delete();
+      // Prevent users cache refresh
+      unset($users[$username]);
+      $this->saveUsersToCache($users);
+      return true;
+    }
+
+    return false;
   }
 
   public static function userNames() {
