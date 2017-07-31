@@ -1,3 +1,10 @@
+# v1.6.0
+##  07/31/2017
+
+1. [](#new)
+    * User bulk actions
+    * Group bulk actions
+
 # v1.5.4
 ##  07/28/2017
 
