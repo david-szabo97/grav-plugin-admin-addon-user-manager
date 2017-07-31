@@ -143,6 +143,20 @@ class Manager implements IManager, EventSubscriberInterface {
     $twig = $this->grav['twig'];
     $uri = $this->grav['uri'];
 
+    // Bulk actions
+    if (isset($_POST['selected'])) {
+      $groupnames = $_POST['selected'];
+
+      if (isset($_POST['bulk_delete'])) {
+        // Bulk delete groups
+        foreach ($groupnames as $groupname) {
+          Group::remove($groupname);
+        }
+
+        $this->grav->redirect($this->plugin->getPreviousUrl());
+      }
+    }
+
     $group = $this->grav['uri']->paths();
     if (count($group) == 3) {
       $group = $group[2];
@@ -162,6 +176,7 @@ class Manager implements IManager, EventSubscriberInterface {
       $group['users'] = $users;
     } else {
       $vars['fields'] = $this->plugin->getModalsConfiguration()['add_group']['fields'];
+      $vars['bulkFields'] = $this->plugin->getModalsConfiguration()['bulk_group']['fields'];
 
       $groups = $this->groups();
       foreach ($groups as &$group) {

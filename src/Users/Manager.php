@@ -11,6 +11,7 @@ use \Grav\Common\Utils;
 use \Grav\Common\User\User;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
+use \AdminAddonUserManager\Group;
 
 class Manager implements IManager {
 
@@ -116,7 +117,57 @@ class Manager implements IManager {
     $twig = $this->grav['twig'];
     $uri = $this->grav['uri'];
 
+    // Bulk actions
+    if (isset($_POST['selected'])) {
+      $usernames = $_POST['selected'];
+
+      if (isset($_POST['bulk_delete'])) {
+        // Bulk delete
+        foreach ($usernames as $username) {
+          $this->removeUser($username);
+        }
+
+        $this->grav->redirect($this->plugin->getPreviousUrl());
+      } else if (isset($_POST['bulk_add_to_group']) && isset($_POST['groups'])) {
+        // Bulk add users to groups
+        $groups = $_POST['groups'];
+
+        foreach ($usernames as $username) {
+          $user = User::load($username);
+          if ($user->file()->exists()) {
+            if (!isset($user['groups']) || !is_array($user['groups'])) {
+              $user['groups'] = [];
+            }
+
+            $user['groups'] = array_unique(array_merge($user['groups'], $groups));
+            $user->save();
+          }
+        }
+
+        $this->grav->redirect($this->plugin->getPreviousUrl());
+      } else if (isset($_POST['bulk_remove_from_group']) && isset($_POST['groups'])) {
+        // Bulk remove users from groups
+        $groups = $_POST['groups'];
+
+        foreach ($usernames as $username) {
+          $user = User::load($username);
+          if ($user->file()->exists()) {
+            if (!isset($user['groups']) || !is_array($user['groups'])) {
+              $user['groups'] = [];
+            }
+
+            $user['groups'] = array_unique(array_diff($user['groups'], $groups));
+            $user->save();
+          }
+        }
+
+        $this->grav->redirect($this->plugin->getPreviousUrl());
+      }
+    }
+
     $vars['fields'] = $this->plugin->getModalsConfiguration()['add_user']['fields'];
+    $vars['bulkFields'] = $this->plugin->getModalsConfiguration()['bulk_user']['fields'];
+    $vars['groupnames'] = Group::groupNames();
 
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');
