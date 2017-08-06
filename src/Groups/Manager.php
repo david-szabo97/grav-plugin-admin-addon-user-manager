@@ -58,7 +58,7 @@ class Manager implements IManager, EventSubscriberInterface {
         } else {
           if (in_array($obj['groupname'], $groups)) {
             $u['groups'] = array_diff($groups, [$obj['groupname']]);
-            if (is_empty($u['groups'])) {
+            if (empty($u['groups'])) {
               unset($u['groups']);
             }
             $u->save();
