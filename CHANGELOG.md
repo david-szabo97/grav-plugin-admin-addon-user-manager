@@ -1,3 +1,9 @@
+# v1.6.1
+##  08/06/2017
+
+1. [](#bugfix)
+    * Fixed removing of user from group not working. (#16, #17 Moonlight63 <https://github.com/Moonlight63>)
+
 # v1.6.0
 ##  07/31/2017
 
