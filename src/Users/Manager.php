@@ -208,8 +208,8 @@ class Manager implements IManager {
     $vars['fields'] = $this->plugin->getModalsConfiguration()['add_user']['fields'];
     $vars['bulkFields'] = $this->plugin->getModalsConfiguration()['bulk_user']['fields'];
     $vars['groupnames'] = Group::groupNames();
-    $permissions = $this->grav['admin']->getPermissions();
-    foreach ($permissions as $k=>&$v) $v = $k;
+    $permissions = array_keys($this->grav['admin']->getPermissions());
+    foreach ($permissions as $k=>&$v) $v = ['text' => $v, 'value' => $v];
     $vars['permissions'] = $permissions;
 
     // List style (grid or list)

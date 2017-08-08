@@ -57,7 +57,7 @@ bulk_user:
     style: vertical
     classes: large warning
 
-  - type: select
+  - type: selectize
     name: permissions
     multiple: true
     size: large
