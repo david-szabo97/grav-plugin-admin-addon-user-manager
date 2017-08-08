@@ -1,3 +1,9 @@
+# v1.7.0
+##  08/08/2017
+
+1. [](#new)
+    * User permissions bulk actions
+
 # v1.6.1
 ##  08/06/2017
 
