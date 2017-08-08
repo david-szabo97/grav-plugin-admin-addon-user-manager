@@ -1,3 +1,9 @@
+# v1.7.1
+##  08/08/2017
+
+1. [](#new)
+    * Permissions input in the bulk modal now accepts new values too
+
 # v1.7.0
 ##  08/08/2017
 
