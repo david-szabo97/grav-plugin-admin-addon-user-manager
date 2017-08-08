@@ -57,6 +57,28 @@ bulk_user:
     style: vertical
     classes: large warning
 
+  - type: select
+    name: permissions
+    multiple: true
+    size: large
+    label: PLUGIN_ADMIN.PERMISSIONS
+    classes: fancy
+    help: PLUGIN_ADMIN.PERMISSIONS_HELP
+    validate:
+        type: commalist
+
+  - type: button
+    text: PLUGIN_ADMIN_ADDON_USER_MANAGER.BULK_ADD_PERMISSIONS
+    name: bulk_add_acl
+    style: vertical
+    classes: large
+
+  - type: button
+    text: PLUGIN_ADMIN_ADDON_USER_MANAGER.BULK_REMOVE_PERMISSIONS
+    name: bulk_remove_acl
+    style: vertical
+    classes: large warning
+
 bulk_group:
   fields:
   - type: section

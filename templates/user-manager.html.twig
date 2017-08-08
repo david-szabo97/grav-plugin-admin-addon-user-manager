@@ -110,6 +110,9 @@
           {% if field.name == 'groups' %}
           {% set field = field|merge({options: groupnames}) %}
           {% endif %}
+          {% if field.name == 'permissions' %}
+          {% set field = field|merge({options: permissions}) %}
+          {% endif %}
           <div class="block block-{{field.type}}">
             {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
           </div>

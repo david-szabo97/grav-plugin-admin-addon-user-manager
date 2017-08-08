@@ -7,11 +7,12 @@ use Grav\Common\Assets;
 use RocketTheme\Toolbox\Event\Event;
 use AdminAddonUserManager\Manager as IManager;
 use AdminAddonUserManager\Pagination\ArrayPagination;
-use \Grav\Common\Utils;
-use \Grav\Common\User\User;
+use Grav\Common\Utils;
+use Grav\Common\User\User;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
-use \AdminAddonUserManager\Group;
+use AdminAddonUserManager\Group;
+use AdminAddonUserManager\Dot;
 
 class Manager implements IManager {
 
@@ -162,12 +163,54 @@ class Manager implements IManager {
         }
 
         $this->grav->redirect($this->plugin->getPreviousUrl());
+      } else if (isset($_POST['bulk_add_acl']) && isset($_POST['permissions'])) {
+        // Bulk add permissions to users
+        $access = [];
+        foreach ($_POST['permissions'] as $p) {
+          Dot::set($access, $p, true);
+        }
+
+        foreach ($usernames as $username) {
+          $user = User::load($username);
+          if ($user->file()->exists()) {
+            if (!isset($user['access']) || !is_array($user['access'])) {
+              $user['access'] = [];
+            }
+
+            $user['access'] = array_merge_recursive($user['access'], $access);
+            $user->save();
+          }
+        }
+
+        $this->grav->redirect($this->plugin->getPreviousUrl());
+      } else if (isset($_POST['bulk_remove_acl']) && isset($_POST['permissions'])) {
+        // Bulk remove permissions from users
+        foreach ($usernames as $username) {
+          $user = User::load($username);
+          if ($user->file()->exists()) {
+            if (!isset($user['access']) || !is_array($user['access'])) {
+              $user['access'] = [];
+            }
+
+            $access = $user['access'];
+            foreach ($_POST['permissions'] as $p) {
+              Dot::delete($access, $p);
+            }
+            $user['access'] = $access;
+            $user->save();
+          }
+        }
+
+        $this->grav->redirect($this->plugin->getPreviousUrl());
       }
     }
 
     $vars['fields'] = $this->plugin->getModalsConfiguration()['add_user']['fields'];
     $vars['bulkFields'] = $this->plugin->getModalsConfiguration()['bulk_user']['fields'];
     $vars['groupnames'] = Group::groupNames();
+    $permissions = $this->grav['admin']->getPermissions();
+    foreach ($permissions as $k=>&$v) $v = $k;
+    $vars['permissions'] = $permissions;
 
     // List style (grid or list)
     $listStyle = $uri->param('listStyle');
