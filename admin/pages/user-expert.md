@@ -1,5 +1,5 @@
 ---
-title: User Exprt
+title: User Expert
 access:
     admin.users_expert: true
     admin.login: true
