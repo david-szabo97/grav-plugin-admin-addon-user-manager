@@ -8,6 +8,7 @@ use \Grav\Common\User\User;
 use Grav\Common\File\CompiledYamlFile;
 use AdminAddonUserManager\Users\Manager as UsersManager;
 use AdminAddonUserManager\Groups\Manager as GroupsManager;
+use AdminAddonUserManager\Users\ExpertManager as UsersExpertManager;
 
 class AdminAddonUserManagerPlugin extends Plugin {
 
@@ -56,6 +57,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     $this->managers[] = new UsersManager($this->grav, $this);
     $this->managers[] = new GroupsManager($this->grav, $this);
+    $this->managers[] = new UsersExpertManager($this->grav, $this);
 
     $this->enable([
       'onAdminTwigTemplatePaths' => ['onAdminTwigTemplatePaths', -10],
