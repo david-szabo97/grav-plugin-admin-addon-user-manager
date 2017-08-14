@@ -1,0 +1,28 @@
+{% extends 'partials/base.html.twig' %}
+
+{% set title = "PLUGIN_ADMIN.USER"|tu ~ ": " ~ admin.route|e %}
+
+{% block titlebar %}
+  <div class="button-bar">
+    <a class="button" href="{{ base_url }}/user-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
+    <button class="button" type="submit" name="task" value="save" form="blueprints" onclick="document.getElementById('user_expert_form').submit()"><i class="fa fa-check"></i> {{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
+  </div>
+
+  <h1><i class="fa fa-fw fa-user"></i> {{ "PLUGIN_ADMIN.USER"|tu }}: {{ user.username|e }}</h1>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+
+  <form method="post" id="user_expert_form">
+    {% for field in blueprint.fields %}
+      {% if field.type %}
+        {% set value = attribute(_context, field.name) %}
+        <div class="block block-{{field.type}}">
+          {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+        </div>
+      {% endif %}
+    {% endfor %}
+    {{ nonce_field('form', 'form-nonce')|raw }}
+  </form>
+{% endblock %}

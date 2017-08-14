@@ -1,0 +1,16 @@
+title: User
+form:
+  fields:
+    raw:
+      type: editor
+      label: Raw
+      autofocus: true
+      codemirror:
+        mode: 'yaml'
+        indentUnit: 4
+        autofocus: true
+        indentWithTabs: false
+        lineNumbers: true
+        styleActiveLine: true
+        gutters: ['CodeMirror-lint-markers']
+        lint: true
