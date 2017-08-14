@@ -72,6 +72,7 @@
               <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
               <div class="user__email">{{ user.email }}</div>
               <div class="user__actions">
+                <a href="{{ base_url ~ '/user-expert/' ~ user.username }}" class="Expert">Expert</a>
                 <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
               </div>
             </div>
