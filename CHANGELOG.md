@@ -1,3 +1,10 @@
+# v1.8.0
+##  14/08/2017
+
+1. [](#new)
+    * Custom permissions (#18)
+    * User Expert editor (#19)
+
 # v1.7.1
 ##  08/08/2017
 
