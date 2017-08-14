@@ -82,7 +82,9 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     foreach ($this->managers as $manager) {
       $nav = $manager->getNav();
-      $twig->plugins_hooked_nav[$nav['label']] = $nav;
+      if ($nav) {
+        $twig->plugins_hooked_nav[$nav['label']] = $nav;
+      }
     }
   }
 
