@@ -92,6 +92,9 @@
     <form method="post" onsubmit='handleAdminAddonUserManagerSubmit(this); return false;'>
       {% for field in fields %}
         {% if field.type %}
+          {% if field.name == 'username' %}
+          {% set field = field|merge({ validate: field.validate|merge({ pattern: grav.config.system.username_regex })}) %}
+          {% endif %}
           <div class="block block-{{field.type}}">
             {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
           </div>

@@ -7,8 +7,10 @@ add_user:
     label: PLUGIN_ADMIN.USERNAME
     help: PLUGIN_ADMIN.USERNAME_HELP
     name: username
+    placeholder: PLUGIN_ADMIN.USERNAME_PLACEHOLDER
     validate:
       required: true
+      message: PLUGIN_LOGIN.USERNAME_NOT_VALID
 
 add_group:
   fields:
