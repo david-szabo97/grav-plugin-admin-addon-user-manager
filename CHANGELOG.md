@@ -1,3 +1,9 @@
+# v1.8.1
+##  18/09/2017
+
+1. [](#improved)
+    * Added username validating (#21)
+
 # v1.8.0
 ##  14/08/2017
 
