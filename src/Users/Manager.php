@@ -85,7 +85,7 @@ class Manager implements IManager {
    * @return void
    */
   public function initializeAssets(Assets $assets) {
-    $this->grav['assets']->addCss('plugin://' . $this->plugin->name . '/assets/users/style.css');
+    $assets->addCss('plugin://' . $this->plugin->name . '/assets/users/style.css');
   }
 
   /**
