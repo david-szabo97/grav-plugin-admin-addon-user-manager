@@ -164,7 +164,7 @@
   {% else %}
   <h1>{{ user.username }}</h1>
 
-  {% include 'partials/blueprints.html.twig' with { data: user, blueprints: user.blueprints } %}
+  {% include 'partials/blueprints.html.twig' with { data: user, blueprints: blueprints } %}
 
   <script>$('button[type=submit]').on('click', function() { $(window).off('beforeunload'); });</script>
   {% endif %}

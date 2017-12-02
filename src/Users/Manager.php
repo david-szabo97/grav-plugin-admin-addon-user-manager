@@ -4,6 +4,7 @@ namespace AdminAddonUserManager\Users;
 use Grav\Common\Grav;
 use Grav\Plugin\AdminAddonUserManagerPlugin;
 use Grav\Common\Assets;
+use Grav\Common\Data\Blueprints;
 use RocketTheme\Toolbox\Event\Event;
 use AdminAddonUserManager\Manager as IManager;
 use AdminAddonUserManager\Pagination\ArrayPagination;
@@ -133,6 +134,9 @@ class Manager implements IManager {
         $user->save();
         $this->grav->redirect($this->plugin->getPreviousUrl());
       } else {
+        $blueprints = new Blueprints;
+        $blueprint = $blueprints->get('user/aaum-account');
+        $vars['blueprints'] = $blueprint;
         $vars['user'] = $user = User::load($user);
       }
     } else {
