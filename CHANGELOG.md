@@ -1,3 +1,10 @@
+# v1.9.0
+##  02/12/2017
+
+1. [](#improved)
+    * Using custom blueprint for user editing (#23)
+    * Using custom request handler for saving user data (#23)
+
 # v1.8.1
 ##  18/09/2017
 
