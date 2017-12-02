@@ -2,17 +2,29 @@
 {% import 'user-manager-macros.html.twig' as macros %}
 
 {% block titlebar %}
+  {% if not user %}
   <div class="button-bar">
     <a class="button" href="#modal-admin-addon-user-manager-new" data-remodal-target="modal-admin-addon-user-manager-new"><i class="fa fa-plus"></i> {{ "PLUGIN_ADMIN.ADD"|tu }}</a>
   </div>
 
   <h1><i class="fa fa-fw fa-user-o"></i> Manage Users</h1>
+  {% else %}
+  <div class="button-bar">
+    <a class="button" href="{{ base_url }}/user-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
+    {% if exists %}
+    <a class="button disable-after-click" href="{{ uri.addNonce(uri.route(true) ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="page-delete" ><i class="fa fa-close"></i> {{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
+    {% endif %}
+    <button class="button" type="submit" name="task" value="admin-addon-user-manager-save" form="blueprints"><i class="fa fa-check"></i> {{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
+  </div>
+  <h1><i class="fa fa-fw fa-user"></i> {{ "PLUGIN_ADMIN.USER"|tu }}: {{ user.username|e }}</h1>
+  {% endif %}
 {% endblock %}
 
 {% set ps = config.system.param_sep %}
 {% set appendUrl = '?filter=' ~ filter|url_encode %}
 
 {% block content %}
+  {% if not user %}
   {% set style = listStyle|default('grid') %}
 
   <h1>Users</h1>
@@ -65,15 +77,15 @@
           <div class="cell">
             <div class="user">
               {% if style == 'grid' %}
-              <div class="user__avatar"><a href="{{ base_url }}/user/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
+              <div class="user__avatar"><a href="{{ base_url }}/user-manager/{{ user.username }}"><img src="{{ user.avatarUrl }}" /></a></div>
               {% else %}
               <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
               {% endif %}
-              <div class="user__username"><a href="{{ base_url }}/user/{{ user.username }}">{{ user.username }}</a></div>
+              <div class="user__username"><a href="{{ base_url }}/user-manager/{{ user.username }}">{{ user.username }}</a></div>
               <div class="user__email">{{ user.email }}</div>
               <div class="user__actions">
                 <a href="{{ base_url ~ '/user-expert/' ~ user.username }}" class="Expert">Expert</a>
-                <a href="{{ uri.addNonce(base_url ~ '/user/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+                <a href="{{ uri.addNonce(base_url ~ '/user-manager/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete" onclick="return confirm('{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_CONFIRM_DELETE"|tu }}');">Delete</a>
               </div>
             </div>
           </div>
@@ -132,7 +144,7 @@
   <script>
     function handleAdminAddonUserManagerSubmit(form) {
       var username = form.querySelector('[name=username]').value;
-      window.location = '{{ base_url }}/user/' + username;
+      window.location = '{{ base_url }}/user-manager/' + username;
     }
 
     var selectAllEle = document.getElementById('selectAll');
@@ -149,4 +161,11 @@
       }
     }
   </script>
+  {% else %}
+  <h1>{{ user.username }}</h1>
+
+  {% include 'partials/blueprints.html.twig' with { data: user, blueprints: user.blueprints } %}
+
+  <script>$('button[type=submit]').on('click', function() { $(window).off('beforeunload'); });</script>
+  {% endif %}
 {% endblock %}
