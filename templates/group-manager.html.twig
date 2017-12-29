@@ -131,11 +131,13 @@
 
     var selectAllEle = document.getElementById('selectAll');
     var selectEles = document.querySelectorAll('input[name="selected[]"]');
-    selectAllEle.addEventListener('change', function(e) {
-      for (var i = 0; i < selectEles.length; i++) {
-        selectEles[i].checked = this.checked;
-      }
-    });
+    if (selectAllEle) {
+      selectAllEle.addEventListener('change', function(e) {
+        for (var i = 0; i < selectEles.length; i++) {
+          selectEles[i].checked = this.checked;
+        }
+      });
+    }
 
     function handleAdminAddonUserManagerBulkSubmit(form) {
       for (var i = 0; i < selectEles.length; i++) {
