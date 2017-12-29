@@ -116,7 +116,7 @@ class Manager implements IManager, EventSubscriberInterface {
     if ($method === 'taskUserDelete') {
       $username = $this->grav['uri']->paths()[2];
       if ($this->removeUser($username)) {
-        $this->grav->redirect($this->plugin->getPreviousUrl());
+        $this->grav->redirect($this->getLocation());
       }
     } elseif ($method === 'taskUserLoginAs') {
       $username = $this->grav['uri']->paths()[2];
