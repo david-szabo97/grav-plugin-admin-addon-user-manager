@@ -1,3 +1,10 @@
+# v1.9.1
+##  29/12/2017
+
+1. [](#bugfix)
+    * Fixed 'Memory leak when using non-ascii character (?) to create group' (#26)
+    * Fixed being redirected to the deleted group, now redirects to the group manager
+
 # v1.9.0
 ##  02/12/2017
 
