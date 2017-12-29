@@ -138,6 +138,7 @@ class Manager implements IManager {
         $blueprint = $blueprints->get('user/aaum-account');
         $vars['blueprints'] = $blueprint;
         $vars['user'] = $user = User::load($user);
+        $vars['exists'] = $user->exists();
       }
     } else {
       // Bulk actions
