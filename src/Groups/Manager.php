@@ -36,8 +36,8 @@ class Manager implements IManager, EventSubscriberInterface {
   public function onAdminData($e) {
     $type = $e['type'];
 
-    if (preg_match('|group-manager/|', $type)) {
-      $obj = Group::load(preg_replace('|group-manager/|', '', $type));
+    if (preg_match('|group-manager|', $type) && ($group = $this->grav['uri']->param('name', false))) {
+      $obj = Group::load($group);
       $post = $_POST['data'];
       if (isset($post['users'])) {
         $usersInGroup = $post['users'];
@@ -123,9 +123,8 @@ class Manager implements IManager, EventSubscriberInterface {
   public function handleTask(Event $event) {
     $method = $event['method'];
 
-    if ($method === 'taskGroupDelete') {
-      Group::remove($this->grav['uri']->paths()[2]);
-      $this->grav->redirect($this->plugin->getPreviousUrl());
+    if ($method === 'taskGroupDelete' && ($group = $this->grav['uri']->param('name', false))) {
+      Group::remove($group);
       return true;
     }
 
@@ -157,12 +156,7 @@ class Manager implements IManager, EventSubscriberInterface {
       }
     }
 
-    $group = $this->grav['uri']->paths();
-    if (count($group) == 3) {
-      $group = $group[2];
-    } else {
-      $group = false;
-    }
+    $group = $this->grav['uri']->param('name', false);
 
     if ($group) {
       $vars['exists'] = Group::groupExists($group);
