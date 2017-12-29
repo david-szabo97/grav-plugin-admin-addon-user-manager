@@ -19,6 +19,7 @@ class Manager implements IManager, EventSubscriberInterface {
 
   private $grav;
   private $plugin;
+  private $adminController;
 
   public function __construct(Grav $grav, AdminAddonUserManagerPlugin $plugin) {
     $this->grav = $grav;
@@ -29,8 +30,14 @@ class Manager implements IManager, EventSubscriberInterface {
 
   public static function getSubscribedEvents() {
     return [
-      'onAdminData' => ['onAdminData', 0],
+      'onAdminControllerInit' => ['onAdminControllerInit', 0],
+      'onAdminData' => ['onAdminData', 0]
     ];
+  }
+
+  public function onAdminControllerInit($e) {
+    $controller = $e['controller'];
+    $this->adminController = $controller;
   }
 
   public function onAdminData($e) {
@@ -38,7 +45,7 @@ class Manager implements IManager, EventSubscriberInterface {
 
     if (preg_match('|group-manager|', $type) && ($group = $this->grav['uri']->param('name', false))) {
       $obj = Group::load($group);
-      $post = $_POST['data'];
+      $post = $this->adminController->data;
       if (isset($post['users'])) {
         $usersInGroup = $post['users'];
         unset($post['users']);
