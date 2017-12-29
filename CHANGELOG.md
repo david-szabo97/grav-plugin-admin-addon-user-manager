@@ -1,3 +1,14 @@
+# v2.0.0
+##  29/12/2017
+
+1. [](#new)
+    * 'Login As' button
+
+2. [](#bugfix)
+    * Fixed being redirected to the deleted user, now redirects to the user manager
+    * The delete button now shows up when editing the user
+    * Avatar upload now works
+
 # v1.9.1
 ##  29/12/2017
 
