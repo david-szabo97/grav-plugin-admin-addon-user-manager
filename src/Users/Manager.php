@@ -49,13 +49,27 @@ class Manager implements IManager, EventSubscriberInterface {
 
   public static function getSubscribedEvents() {
     return [
-      'onAdminControllerInit' => ['onAdminControllerInit', 0]
+      'onAdminControllerInit' => ['onAdminControllerInit', 0],
+      'onAdminData' => ['onAdminData', 0]
     ];
   }
 
   public function onAdminControllerInit($e) {
     $controller = $e['controller'];
     $this->adminController = $controller;
+  }
+
+  public function onAdminData($e) {
+    $type = $e['type'];
+
+    if (preg_match('|user-manager/|', $type)) {
+      $post = $this->adminController->data;
+
+      $obj = User::load(preg_replace('|user-manager/|', '', $type));
+      $obj->merge($post);
+
+      $e['data_type'] = $obj;
+    }
   }
 
   /**
