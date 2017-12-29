@@ -13,3 +13,4 @@ PLUGIN_ADMIN_ADDON_USER_MANAGER:
   BULK_DELETE_GROUP: Delete selected groups
   BULK_ADD_PERMISSIONS: Add selected permissions to selected
   BULK_REMOVE_PERMISSIONS: Remove selected permissions to selected users
+  LOGIN_AS: Login as

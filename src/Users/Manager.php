@@ -10,15 +10,17 @@ use AdminAddonUserManager\Manager as IManager;
 use AdminAddonUserManager\Pagination\ArrayPagination;
 use Grav\Common\Utils;
 use Grav\Common\User\User;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 use AdminAddonUserManager\Group;
 use AdminAddonUserManager\Dot;
 
-class Manager implements IManager {
+class Manager implements IManager, EventSubscriberInterface {
 
   private $grav;
   private $plugin;
+  private $adminController;
 
   /**
    * In-memory caching for users
@@ -41,6 +43,19 @@ class Manager implements IManager {
     $this->plugin = $plugin;
 
     self::$instance = $this;
+
+    $this->grav['events']->addSubscriber($this);
+  }
+
+  public static function getSubscribedEvents() {
+    return [
+      'onAdminControllerInit' => ['onAdminControllerInit', 0]
+    ];
+  }
+
+  public function onAdminControllerInit($e) {
+    $controller = $e['controller'];
+    $this->adminController = $controller;
   }
 
   /**
@@ -103,6 +118,16 @@ class Manager implements IManager {
       if ($this->removeUser($username)) {
         $this->grav->redirect($this->plugin->getPreviousUrl());
       }
+    } elseif ($method === 'taskUserLoginAs') {
+      $username = $this->grav['uri']->paths()[2];
+      $user = User::load($username);
+      $user->authenticated = true;
+
+      $this->grav['session']->user = $user;
+      unset($this->grav['user']);
+      $this->grav['user'] = $user;
+
+      $this->adminController->setRedirect('/');
     }
 
     return false;
