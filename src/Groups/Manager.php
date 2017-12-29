@@ -125,6 +125,7 @@ class Manager implements IManager, EventSubscriberInterface {
 
     if ($method === 'taskGroupDelete' && ($group = $this->grav['uri']->param('name', false))) {
       Group::remove($group);
+      $this->grav->redirect($this->grav['uri']->url($this->getLocation()));
       return true;
     }
 
