@@ -1,3 +1,9 @@
+# v2.0.1
+##  01/01/2018
+
+1. [](#bugfix)
+    * Fixed admin links not working when something is changed in the form (#27)
+
 # v2.0.0
 ##  29/12/2017
 
