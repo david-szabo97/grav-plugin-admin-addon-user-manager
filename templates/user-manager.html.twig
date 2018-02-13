@@ -7,7 +7,7 @@
     <a class="button" href="#modal-admin-addon-user-manager-new" data-remodal-target="modal-admin-addon-user-manager-new"><i class="fa fa-plus"></i> {{ "PLUGIN_ADMIN.ADD"|tu }}</a>
   </div>
 
-  <h1><i class="fa fa-fw fa-user-o"></i> Manage Users</h1>
+  <h1><i class="fa fa-fw fa-user-o"></i> {{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.MANAGE_USERS"|tu }}</h1>
   {% else %}
   <div class="button-bar">
     <a class="button" href="{{ base_url }}/user-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
@@ -31,7 +31,7 @@
   <h1>Users</h1>
 
   {% if filterException %}
-  <div class="notices red"><h2>Filter Error</h2><p>{{ filterException.message }}</p></div>
+  <div class="notices red"><h2>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.FILTER_ERROR"|tu }}</h2><p>{{ filterException.message }}</p></div>
   {% endif %}
 
   <div class="admin-addon-user-manager-filter">
@@ -41,7 +41,7 @@
           <div class="form-field vertical">
             <div class="form-data" data-grav-default="{{ filter }}">
               <div class="form-input-wrapper">
-                <input name="filter" value="{{ filter }}" type="text" placeholder="Filter users">
+                <input name="filter" value="{{ filter }}" type="text" placeholder="{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.FILTER_USERS"|tu }}">
               </div>
             </div>
           </div>
@@ -62,15 +62,15 @@
   <form method="post">
     <div class="admin-addon-user-manager admin-addon-user-manager--{{ style }}">
       {% if users is empty %}
-        <h2>No results</h2>
+        <h2>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.NO_RESULTS"|tu }}</h2>
       {% else %}
           {% if style == 'list' %}
           <div class="cell cell--header">
             <div class="user">
               <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
-              <div class="user__username">Username</div>
-              <div class="user__email">Email</div>
-              <div class="user__actions">Actions</div>
+              <div class="user__username">{{ "PLUGIN_ADMIN.USERNAME"|tu }}</div>
+              <div class="user__email">{{ "PLUGIN_ADMIN.EMAIL"|tu }}</div>
+              <div class="user__actions">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.ACTIONS"|tu }}</div>
             </div>
           </div>
           {% endif %}
@@ -85,8 +85,8 @@
               <div class="user__username"><a href="{{ base_url }}/user-manager/{{ user.username }}">{{ user.username }}</a></div>
               <div class="user__email">{{ user.email }}</div>
               <div class="user__actions">
-                <a href="{{ base_url ~ '/user-expert/' ~ user.username }}" class="Expert">Expert</a>
-                <a href="{{ uri.addNonce(base_url ~ '/user-manager/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete" onclick="return confirm('{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_CONFIRM_DELETE"|tu }}');">Delete</a>
+                <a href="{{ base_url ~ '/user-expert/' ~ user.username }}" class="expert">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.EXPERT"|tu }}</a>
+                <a href="{{ uri.addNonce(base_url ~ '/user-manager/' ~ user.username ~ '/task' ~ ps ~ 'userDelete', 'admin-form', 'admin-nonce') }}" class="delete" onclick="return confirm('{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_CONFIRM_DELETE"|tu }}');">{{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
     </div>
 
     <div class="admin-addon-user-manager-bulk-action">
-      <a data-remodal-target="modal-admin-addon-user-manager-bulk" class="button">Bulk action</a>
+      <a data-remodal-target="modal-admin-addon-user-manager-bulk" class="button">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.BULK_ACTION"|tu }}</a>
     </div>
   </form>
 

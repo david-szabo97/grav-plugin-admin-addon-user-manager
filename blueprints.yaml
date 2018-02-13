@@ -20,24 +20,24 @@ form:
   fields:
     enabled:
       type: toggle
-      label: Plugin status
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
       highlight: 1
       default: 0
       options:
-        1: Enabled
-        0: Disabled
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
 
     default_list_style:
-      label: Default list style
+      label: PLUGIN_ADMIN_ADDON_USER_MANAGER.DEFAULT_LIST_STYLE
       type: select
       options:
-        grid: Grid
-        list: List
+        grid: PLUGIN_ADMIN_ADDON_USER_MANAGER.GRID
+        list: PLUGIN_ADMIN_ADDON_USER_MANAGER.LIST
 
     pagination.per_page:
-      label: Users per page
+      label: PLUGIN_ADMIN_ADDON_USER_MANAGER.USERS_PER_PAGE
       type: select
       options:
         10: 10
@@ -52,7 +52,7 @@ form:
         100: 100
 
     custom_permissions:
-      label: Custom permissions
+      label: PLUGIN_ADMIN_ADDON_USER_MANAGER.CUSTOM_PERMISSIONS
       type: array
-      placeholder_value: "Permission (e.g. 'site.login')"
+      placeholder_value: PLUGIN_ADMIN_ADDON_USER_MANAGER.CUSTOM_PERMISSIONS_PLACEHOLDER
       value_only: true

@@ -1,4 +1,22 @@
 PLUGIN_ADMIN_ADDON_USER_MANAGER:
+  USER_MANAGER: User Manager
+  GROUP_MANAGER: Group Manager
+  MANAGE_USERS: Manage Users
+  MANAGE_GROUPS: Manage Groups
+  FILTER_ERROR: Filter Error
+  FILTER_USERS: Filter users
+  FILTER_GROUPS: Filter groups
+  NO_RESULTS: No results
+  EXPERT: Expert
+  PAGINATION_SUMMARY: Showing %d - %d of %d
+  BULK_ACTION: Bulk Action
+  ACTIONS: Actions
+  CUSTOM_PERMISSIONS: Custom permissions
+  CUSTOM_PERMISSIONS_PLACEHOLDER: "Permission (e.g. 'site.login')"
+  USERS_PER_PAGE: Users per page
+  DEFAULT_LIST_STYLE: Default list style
+  GRID: Grid
+  LIST: List
   GROUP: Group
   READABLE_NAME: Readable name
   ICON: Icon

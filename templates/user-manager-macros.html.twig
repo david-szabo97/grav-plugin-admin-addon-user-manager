@@ -25,7 +25,7 @@
         {% endif %}
       </ul>
 
-      <div class="admin-addon-user-manager-pagination__text">Showing {{ pagination.startOffset + 1 }} - {{ pagination.endOffset }} of {{ pagination.total }}</div>
+      <div class="admin-addon-user-manager-pagination__text">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.PAGINATION_SUMMARY"|t(pagination.startOffset + 1, pagination.endOffset, pagination.total) }}</div>
     </div>
   {% endif %}
 {% endmacro %}

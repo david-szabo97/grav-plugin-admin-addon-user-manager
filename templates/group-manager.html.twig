@@ -13,7 +13,7 @@
     <a class="button" href="#modal-admin-addon-user-manager-new" data-remodal-target="modal-admin-addon-user-manager-new"><i class="fa fa-plus"></i> {{ "PLUGIN_ADMIN.ADD"|tu }}</a>
   </div>
 
-  <h1><i class="fa fa-fw fa-user-o"></i> Manage Groups</h1>
+  <h1><i class="fa fa-fw fa-user-o"></i> {{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.MANAGE_GROUPS"|tu }}</h1>
   {% else %}
   <div class="button-bar">
     <a class="button" href="{{ base_url }}/group-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
@@ -33,7 +33,7 @@
   <h1>Groups</h1>
 
   {% if filterException %}
-  <div class="notices red"><h2>Filter Error</h2><p>{{ filterException.message }}</p></div>
+  <div class="notices red"><h2>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.FILTER_ERROR"|tu }}</h2><p>{{ filterException.message }}</p></div>
   {% endif %}
 
   <div class="admin-addon-user-manager-filter">
@@ -43,7 +43,7 @@
           <div class="form-field vertical">
             <div class="form-data" data-grav-default="{{ filter }}">
               <div class="form-input-wrapper">
-                <input name="filter" value="{{ filter }}" type="text" placeholder="Filter groups">
+                <input name="filter" value="{{ filter }}" type="text" placeholder="{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.FILTER_GROUPS"|tu }}">
               </div>
             </div>
           </div>
@@ -59,13 +59,13 @@
   <form method="post">
     <div class="admin-addon-user-manager admin-addon-user-manager--list admin-addon-user-manager--group">
       {% if groups is empty %}
-        <h2>No results</h2>
+        <h2>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.NO_RESULTS"|tu }}</h2>
       {% else %}
         <div class="cell cell--header">
           <div class="user">
             <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
-            <div class="user__username">Name</div>
-            <div class="user__actions">Actions</div>
+            <div class="user__username">{{ "PLUGIN_ADMIN.NAME"|tu }}</div>
+            <div class="user__actions">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.ACTIONS"|tu }}</div>
           </div>
         </div>
 
@@ -75,7 +75,7 @@
             <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ groupName }}" /></div>
             <div class="user__username"><a href="{{ uri.route(true) ~ '/name' ~ ps ~ group.groupname }}">({{ group.users }}) <i class="fa fa-{{ group.icon}}"></i> {{ group.readableName ?: groupName }}</a></div>
             <div class="user__actions">
-              <a href="{{ uri.addNonce(uri.route(true)  ~ '/name' ~ ps ~ group.groupname ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">Delete</a>
+              <a href="{{ uri.addNonce(uri.route(true)  ~ '/name' ~ ps ~ group.groupname ~ '/task' ~ ps ~ 'groupDelete', 'admin-form', 'admin-nonce') }}" class="delete">{{ "PLUGIN_ADMIN.DELETE"|tu }}</a>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
     </div>
 
     <div class="admin-addon-user-manager-bulk-action">
-      <a data-remodal-target="modal-admin-addon-user-manager-bulk" class="button">Bulk action</a>
+      <a data-remodal-target="modal-admin-addon-user-manager-bulk" class="button">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.BULK_ACTION"|tu }}</a>
     </div>
   </form>
 

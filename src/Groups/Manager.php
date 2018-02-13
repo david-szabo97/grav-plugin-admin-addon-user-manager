@@ -101,7 +101,7 @@ class Manager implements IManager, EventSubscriberInterface {
    */
   public function getNav() {
     return [
-      'label' => 'Group Manager',
+      'label' => $this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP_MANAGER']),
       'location' => $this->getLocation(),
       'icon' => 'fa-group',
       'authorize' => $this->getRequiredPermission(),
