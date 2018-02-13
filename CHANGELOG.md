@@ -1,3 +1,9 @@
+# v2.0.3
+##  27/02/2018
+
+1. [](#improved)
+    * Added missing translations
+
 # v2.0.2
 ##  27/01/2018
 
