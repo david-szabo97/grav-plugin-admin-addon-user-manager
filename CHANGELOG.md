@@ -1,5 +1,5 @@
 # v2.0.2
-##  27/02/2018
+##  27/01/2018
 
 1. [](#bugfix)
     * Fixed wrong redirection after deleting an user (#28)
