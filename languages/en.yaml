@@ -16,6 +16,7 @@ PLUGIN_ADMIN_ADDON_USER_MANAGER:
   GRID: Grid
   LIST: List
   GROUP: Group
+  GROUPS: Groups
   READABLE_NAME: Readable name
   ICON: Icon
   ADD_GROUP: Add Group

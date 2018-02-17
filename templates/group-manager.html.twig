@@ -30,7 +30,7 @@
 
 {% block content %}
   {% if not group %}
-  <h1>Groups</h1>
+  <h1>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUPS"|tu }}</h1>
 
   {% if filterException %}
   <div class="notices red"><h2>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.FILTER_ERROR"|tu }}</h2><p>{{ filterException.message }}</p></div>

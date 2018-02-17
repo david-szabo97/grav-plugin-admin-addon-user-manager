@@ -98,7 +98,7 @@ class Manager implements IManager, EventSubscriberInterface {
    */
   public function getNav() {
     return [
-      'label' => $this->grav['language']->translate(['PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_MANAGER']),
+      'label' => 'PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_MANAGER',
       'location' => $this->getLocation(),
       'icon' => 'fa-user',
       'authorize' => $this->getRequiredPermission(),
