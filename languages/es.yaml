@@ -1,6 +1,6 @@
 PLUGIN_ADMIN_ADDON_USER_MANAGER:
-  USER_MANAGER: Gestor de usuarios
-  GROUP_MANAGER: Gestor de grupos
+  USER_MANAGER: Gestor de Usuarios
+  GROUP_MANAGER: Gestor de Grupos
   FILTER_ERROR: Error de filtro
   FILTER_USERS: Filtrar usuarios
   FILTER_GROUPS: Filtrar grupos
