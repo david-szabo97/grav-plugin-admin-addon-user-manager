@@ -186,5 +186,12 @@
       $(global).off('beforeunload');
     });
   </script>
+
+  <!-- Temporary fix: https://github.com/getgrav/grav-plugin-admin/pull/1379 -->
+  <style>
+    .permission-container {
+      overflow: hidden;
+    }
+  </style>
   {% endif %}
 {% endblock %}
