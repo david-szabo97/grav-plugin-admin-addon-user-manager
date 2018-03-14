@@ -180,5 +180,11 @@
       </div>
     </form>
   </div>
+
+  <script>
+    $('[name="task"][value$="save"]').on('click._grav', function(event) {
+      $(global).off('beforeunload');
+    });
+  </script>
   {% endif %}
 {% endblock %}
