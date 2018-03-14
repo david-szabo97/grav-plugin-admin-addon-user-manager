@@ -7,7 +7,7 @@
     <a class="button" href="#modal-admin-addon-user-manager-new" data-remodal-target="modal-admin-addon-user-manager-new"><i class="fa fa-plus"></i> {{ "PLUGIN_ADMIN.ADD"|tu }}</a>
   </div>
 
-  <h1><i class="fa fa-fw fa-user-o"></i> {{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.MANAGE_USERS"|tu }}</h1>
+  <h1><i class="fa fa-fw fa-user-o"></i> {{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_MANAGER"|tu }}</h1>
   {% else %}
   <div class="button-bar">
     <a class="button" href="{{ base_url }}/user-manager"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
@@ -28,7 +28,7 @@
   {% if not user %}
   {% set style = listStyle|default('grid') %}
 
-  <h1>Users</h1>
+  <h1>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.USERS"|tu }}</h1>
 
   {% if filterException %}
   <div class="notices red"><h2>{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.FILTER_ERROR"|tu }}</h2><p>{{ filterException.message }}</p></div>
