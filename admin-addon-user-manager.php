@@ -138,6 +138,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     // Custom permissions
     $customPermissions = $this->getPluginConfigValue('custom_permissions', []);
+    $customPermissions[] = 'site.login';
     foreach ($customPermissions as $permission) {
       $this->grav['admin']->addPermissions([$permission => 'boolean']);
     }
