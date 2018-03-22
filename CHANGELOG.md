@@ -1,3 +1,10 @@
+# v2.1.1
+##  22/03/2018
+
+1. [](#improved)
+    * Added 'site.login' permission to the permission list. (#36)
+
+
 # v2.1.0
 ##  14/03/2018
 
