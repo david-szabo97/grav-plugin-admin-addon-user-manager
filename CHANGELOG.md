@@ -1,3 +1,12 @@
+# v2.1.3
+##  02/04/2018
+
+1. [](#improved)
+    * Validate user object on save
+
+2. [](#bugfix)
+    * Fixed unset user permissions being pushed into the access array with an empty string value. Causing inherited permissions to be overwritten. (#38)
+
 # v2.1.2
 ##  29/03/2018
 
