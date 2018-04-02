@@ -169,8 +169,16 @@ class Manager implements IManager, EventSubscriberInterface {
       if (isset($_POST['task']) && $_POST['task'] === 'admin-addon-user-manager-save') {
         $user = User::load($user);
         $post = $_POST['data'];
-        $user->merge($post);
-        $user->save();
+
+        try {
+          $user->merge($post);
+          $user->validate();
+          $user->filter();
+          $user->save();
+        } catch (\Exception $e) {
+          $this->grav['admin']->setMessage($e->getMessage(), 'error');
+        }
+
         $this->grav->redirect($this->plugin->getPreviousUrl());
       } else {
         $blueprints = new Blueprints;
