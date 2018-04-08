@@ -1,3 +1,9 @@
+# v2.1.4
+##  09/04/2018
+
+1. [](#improved)
+    * Moved 'site.login' permission to the front of permission list. (#36)
+
 # v2.1.3
 ##  02/04/2018
 
