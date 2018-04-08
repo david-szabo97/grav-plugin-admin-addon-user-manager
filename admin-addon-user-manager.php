@@ -42,7 +42,8 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
   public static function getSubscribedEvents() {
     return [
-      'onPluginsInitialized' => ['onPluginsInitialized', 0]
+      'onPluginsInitialized' => ['onPluginsInitialized', 0],
+      'onAdminRegisterPermissions' => ['onAdminRegisterPermissions', 1000]
     ];
   }
 
@@ -138,10 +139,13 @@ class AdminAddonUserManagerPlugin extends Plugin {
 
     // Custom permissions
     $customPermissions = $this->getPluginConfigValue('custom_permissions', []);
-    $customPermissions[] = 'site.login';
     foreach ($customPermissions as $permission) {
       $this->grav['admin']->addPermissions([$permission => 'boolean']);
     }
+  }
+
+  public function onAdminRegisterPermissions() {
+    $this->grav['admin']->addPermissions(['site.login' => 'boolean']);
   }
 
 }
