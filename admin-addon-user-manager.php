@@ -145,6 +145,10 @@ class AdminAddonUserManagerPlugin extends Plugin {
   }
 
   public function onAdminRegisterPermissions() {
+    if (!$this->isAdmin() || !$this->grav['user']->authenticated) {
+      return;
+    }
+
     $this->grav['admin']->addPermissions(['site.login' => 'boolean']);
   }
 
