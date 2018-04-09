@@ -1,3 +1,9 @@
+# v2.1.5
+##  09/04/2018
+
+1. [](#bugfix)
+    * Fixed error when rendering front-end (#40)
+
 # v2.1.4
 ##  09/04/2018
 
