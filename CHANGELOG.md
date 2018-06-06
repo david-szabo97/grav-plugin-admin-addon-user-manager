@@ -1,3 +1,9 @@
+# v2.1.6
+##  06/06/2018
+
+1. [](#bugfix)
+    * Fixed error when using 'Login As' feature with an user without admin permissions (#43)
+
 # v2.1.5
 ##  09/04/2018
 
