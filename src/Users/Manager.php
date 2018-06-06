@@ -141,7 +141,11 @@ class Manager implements IManager, EventSubscriberInterface {
       unset($this->grav['user']);
       $this->grav['user'] = $user;
 
-      $this->adminController->setRedirect('/');
+      if ($user->authorize('admin.login')) {
+        $this->adminController->setRedirect('/');
+      } else {
+        $this->grav->redirect('/');
+      }
     }
 
     return false;
