@@ -4,7 +4,8 @@
 {% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP_MANAGER"|tu %}
 
 {% if group %}
-{% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP"|tu ~ ": " ~ group.groupname|e %}
+{% set group_name = group.readableName ?: group.groupname %}
+{% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP"|tu ~ ": " ~ group_name|e %}
 {% endif %}
 
 {% set ps = config.system.param_sep %}
