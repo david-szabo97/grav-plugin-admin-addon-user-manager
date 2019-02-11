@@ -1,6 +1,8 @@
 {% extends 'partials/base.html.twig' %}
 {% import 'user-manager-macros.html.twig' as macros %}
 
+{% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP_MANAGER"|tu %}
+
 {% if group %}
 {% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.GROUP"|tu ~ ": " ~ group.groupname|e %}
 {% endif %}
