@@ -1,6 +1,8 @@
 {% extends 'partials/base.html.twig' %}
 {% import 'user-manager-macros.html.twig' as macros %}
 
+{% set title = "PLUGIN_ADMIN_ADDON_USER_MANAGER.USER_MANAGER"|tu %}
+
 {% block titlebar %}
   {% if not user %}
   <div class="button-bar">
