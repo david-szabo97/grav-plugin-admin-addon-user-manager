@@ -1,3 +1,14 @@
+# v2.1.7
+##  13/02/2019
+
+1. [](#new)
+    * Serbian translation (Thanks: https://github.com/tomaja-linuxo PR #47)
+    * Russian translation (Thanks: https://github.com/Lufog-git PR #50)
+    * Ukrainian translation (Thanks: https://github.com/Lufog-git PR #51)
+
+2. [](#improved)
+    * Fixed some non-translatable strings (Thanks: https://github.com/Lufog-git PR #52)
+
 # v2.1.6
 ##  06/06/2018
 
