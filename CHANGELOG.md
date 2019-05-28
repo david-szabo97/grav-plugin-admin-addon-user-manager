@@ -1,3 +1,12 @@
+# v2.1.8
+## 28/05/2019
+
+1. [](#new)
+    * French translation (Thanks: https://github.com/Miaourt PR #58)
+
+2. [](#bugfix)
+    * Fixed a problem with saving groups (#59)
+
 # v2.1.7
 ##  13/02/2019
 
