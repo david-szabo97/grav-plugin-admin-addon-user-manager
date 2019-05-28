@@ -8,7 +8,6 @@ form:
       size: large
       label: PLUGIN_ADMIN.NAME
       readonly: true
-      disabled: true
 
     readableName:
       type: text
