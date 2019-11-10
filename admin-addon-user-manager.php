@@ -108,6 +108,8 @@ class AdminAddonUserManagerPlugin extends Plugin {
         $session->{$this->name . '.previous_url'} = $uri->route() . $uri->params();
 
         $page = $this->grav['admin']->page(true);
+        $page->id('aaum-' . implode('/', $uri->paths()));
+
         $twig->twig_vars['context'] = $page;
 
         $vars = $manager->handleRequest();

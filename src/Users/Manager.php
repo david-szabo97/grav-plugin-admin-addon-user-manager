@@ -176,6 +176,9 @@ class Manager implements IManager, EventSubscriberInterface {
 
         try {
           $user->merge($post);
+          $method = new \ReflectionMethod('\Grav\Plugin\Admin\AdminController', 'storeFiles');
+          $method->setAccessible(true);
+          $user = $method->invoke($this->adminController, $user);
           $user->validate();
           $user->filter();
           $user->save();
