@@ -6,3 +6,15 @@ form:
   fields:
     security:
       unset-security@: true
+    state:
+      @ordering: content
+      type: toggle
+      label: PLUGIN_ADMIN.ENABLED
+      classes: twofa-toggle
+      highlight: enabled
+      default: enabled
+      options:
+        enabled: PLUGIN_ADMIN.YES
+        disabled: PLUGIN_ADMIN.NO
+      validate:
+        type: string
