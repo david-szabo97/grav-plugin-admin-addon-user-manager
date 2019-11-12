@@ -3,7 +3,7 @@
 
 1. [](#new)
     * Brazilian Portuguese translation (Thanks: https://github.com/diegomagikal PR #61)
-    * Added "Enabled" toggle to used editor
+    * Added "Enabled" toggle to user editor
 
 2. [](#bugfix)
     * Fixed avatar upload
