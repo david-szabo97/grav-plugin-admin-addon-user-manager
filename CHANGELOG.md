@@ -1,11 +1,11 @@
 # v2.2.1
-## 12/11/2019
+##  12/11/2019
 
 1. [](#bugfix)
     * Fix YAML linting error (#63)
 
 # v2.2.0
-## 10/11/2019
+##  10/11/2019
 
 1. [](#new)
     * Brazilian Portuguese translation (Thanks: https://github.com/diegomagikal PR #61)
@@ -15,7 +15,7 @@
     * Fixed avatar upload
 
 # v2.1.8
-## 28/05/2019
+##  28/05/2019
 
 1. [](#new)
     * French translation (Thanks: https://github.com/Miaourt PR #58)
