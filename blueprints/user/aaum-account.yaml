@@ -7,7 +7,7 @@ form:
     security:
       unset-security@: true
     state:
-      @ordering: content
+      ordering@: content
       type: toggle
       label: PLUGIN_ADMIN.ENABLED
       classes: twofa-toggle
