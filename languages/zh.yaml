@@ -8,7 +8,7 @@ PLUGIN_ADMIN_ADDON_USER_MANAGER:
   EXPERT: 专家
   PAGINATION_SUMMARY: 正在显示 %d - %d (共 %d)
   BULK_ACTION: 批量操作
-  ACTIONS: Actions
+  ACTIONS: 操作
   CUSTOM_PERMISSIONS: 自定义权限
   CUSTOM_PERMISSIONS_PLACEHOLDER: "权限 (例如 'site.login')"
   USERS_PER_PAGE: 每页用户数
