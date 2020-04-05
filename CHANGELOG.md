@@ -1,5 +1,5 @@
 # v2.3.0
-## 05/04/2020
+## 04/05/2020
 
 1. [](#new)
     * Chinese translation (Thanks: https://github.com/dallaslu PR #68)
