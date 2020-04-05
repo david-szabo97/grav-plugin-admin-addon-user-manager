@@ -339,6 +339,7 @@ class Manager implements IManager, EventSubscriberInterface {
         'endOffset' => $pagination->getEndOffset()
       ];
       $vars['users'] = $pagination->getPaginatedRows();
+      $vars['user'] = false;
     }
 
     return $vars;
