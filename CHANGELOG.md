@@ -1,3 +1,14 @@
+# v2.3.0
+## 05/04/2020
+
+1. [](#new)
+    * Chinese translation (Thanks: https://github.com/dallaslu PR #68)
+
+2. [](#improved)
+    * Replace deprecated User::load (#66)
+    * Updated dependencies
+    * Better compatibility with v1.7
+
 # v2.2.1
 ## 12/11/2019
 
