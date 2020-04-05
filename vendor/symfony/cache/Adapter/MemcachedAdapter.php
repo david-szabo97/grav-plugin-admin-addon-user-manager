@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Cache\Adapter;
 
+use Symfony\Component\Cache\Marshaller\MarshallerInterface;
 use Symfony\Component\Cache\Traits\MemcachedTrait;
 
 class MemcachedAdapter extends AbstractAdapter
@@ -20,8 +21,6 @@ class MemcachedAdapter extends AbstractAdapter
     protected $maxIdLength = 250;
 
     /**
-     * Constructor.
-     *
      * Using a MemcachedAdapter with a TagAwareAdapter for storing tags is discouraged.
      * Using a RedisAdapter is recommended instead. If you cannot do otherwise, be aware that:
      * - the Memcached::OPT_BINARY_PROTOCOL must be enabled
@@ -31,8 +30,8 @@ class MemcachedAdapter extends AbstractAdapter
      *
      * Using a MemcachedAdapter as a pure items store is fine.
      */
-    public function __construct(\Memcached $client, $namespace = '', $defaultLifetime = 0)
+    public function __construct(\Memcached $client, string $namespace = '', int $defaultLifetime = 0, MarshallerInterface $marshaller = null)
     {
-        $this->init($client, $namespace, $defaultLifetime);
+        $this->init($client, $namespace, $defaultLifetime, $marshaller);
     }
 }

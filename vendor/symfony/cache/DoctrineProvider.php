@@ -13,17 +13,37 @@ namespace Symfony\Component\Cache;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class DoctrineProvider extends CacheProvider
+class DoctrineProvider extends CacheProvider implements PruneableInterface, ResettableInterface
 {
     private $pool;
 
     public function __construct(CacheItemPoolInterface $pool)
     {
         $this->pool = $pool;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prune()
+    {
+        return $this->pool instanceof PruneableInterface && $this->pool->prune();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reset()
+    {
+        if ($this->pool instanceof ResetInterface) {
+            $this->pool->reset();
+        }
+        $this->setNamespace($this->getNamespace());
     }
 
     /**
@@ -38,6 +58,8 @@ class DoctrineProvider extends CacheProvider
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     protected function doContains($id)
     {
@@ -46,6 +68,8 @@ class DoctrineProvider extends CacheProvider
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     protected function doSave($id, $data, $lifeTime = 0)
     {
@@ -60,6 +84,8 @@ class DoctrineProvider extends CacheProvider
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     protected function doDelete($id)
     {
@@ -68,16 +94,21 @@ class DoctrineProvider extends CacheProvider
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     protected function doFlush()
     {
-        $this->pool->clear();
+        return $this->pool->clear();
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return array|null
      */
     protected function doGetStats()
     {
+        return null;
     }
 }

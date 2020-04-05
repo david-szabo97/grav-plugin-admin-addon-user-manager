@@ -15,6 +15,11 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Cache\Exception\InvalidArgumentException;
+use Symfony\Component\Cache\PruneableInterface;
+use Symfony\Component\Cache\ResettableInterface;
+use Symfony\Component\Cache\Traits\ContractsTrait;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * Chains several adapters together.
@@ -24,17 +29,19 @@ use Symfony\Component\Cache\Exception\InvalidArgumentException;
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
-class ChainAdapter implements AdapterInterface
+class ChainAdapter implements AdapterInterface, CacheInterface, PruneableInterface, ResettableInterface
 {
-    private $adapters = array();
+    use ContractsTrait;
+
+    private $adapters = [];
     private $adapterCount;
-    private $saveUp;
+    private $syncItem;
 
     /**
-     * @param CacheItemPoolInterface[] $adapters    The ordered list of adapters used to fetch cached items
-     * @param int                      $maxLifetime The max lifetime of items propagated from lower adapters to upper ones
+     * @param CacheItemPoolInterface[] $adapters        The ordered list of adapters used to fetch cached items
+     * @param int                      $defaultLifetime The default lifetime of items propagated from lower adapters to upper ones
      */
-    public function __construct(array $adapters, $maxLifetime = 0)
+    public function __construct(array $adapters, int $defaultLifetime = 0)
     {
         if (!$adapters) {
             throw new InvalidArgumentException('At least one adapter must be specified.');
@@ -42,7 +49,7 @@ class ChainAdapter implements AdapterInterface
 
         foreach ($adapters as $adapter) {
             if (!$adapter instanceof CacheItemPoolInterface) {
-                throw new InvalidArgumentException(sprintf('The class "%s" does not implement the "%s" interface.', get_class($adapter), CacheItemPoolInterface::class));
+                throw new InvalidArgumentException(sprintf('The class "%s" does not implement the "%s" interface.', \get_class($adapter), CacheItemPoolInterface::class));
             }
 
             if ($adapter instanceof AdapterInterface) {
@@ -51,18 +58,27 @@ class ChainAdapter implements AdapterInterface
                 $this->adapters[] = new ProxyAdapter($adapter);
             }
         }
-        $this->adapterCount = count($this->adapters);
+        $this->adapterCount = \count($this->adapters);
 
-        $this->saveUp = \Closure::bind(
-            function ($adapter, $item) use ($maxLifetime) {
-                $origDefaultLifetime = $item->defaultLifetime;
+        $this->syncItem = \Closure::bind(
+            static function ($sourceItem, $item, $sourceMetadata = null) use ($defaultLifetime) {
+                $sourceItem->isTaggable = false;
+                $sourceMetadata = $sourceMetadata ?? $sourceItem->metadata;
+                unset($sourceMetadata[CacheItem::METADATA_TAGS]);
 
-                if (0 < $maxLifetime && ($origDefaultLifetime <= 0 || $maxLifetime < $origDefaultLifetime)) {
-                    $item->defaultLifetime = $maxLifetime;
+                $item->value = $sourceItem->value;
+                $item->expiry = $sourceMetadata[CacheItem::METADATA_EXPIRY] ?? $sourceItem->expiry;
+                $item->isHit = $sourceItem->isHit;
+                $item->metadata = $item->newMetadata = $sourceItem->metadata = $sourceMetadata;
+
+                if (0 < $sourceItem->defaultLifetime && $sourceItem->defaultLifetime < $defaultLifetime) {
+                    $defaultLifetime = $sourceItem->defaultLifetime;
+                }
+                if (0 < $defaultLifetime && ($item->defaultLifetime <= 0 || $defaultLifetime < $item->defaultLifetime)) {
+                    $item->defaultLifetime = $defaultLifetime;
                 }
 
-                $adapter->save($item);
-                $item->defaultLifetime = $origDefaultLifetime;
+                return $item;
             },
             null,
             CacheItem::class
@@ -72,20 +88,51 @@ class ChainAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
+    public function get(string $key, callable $callback, float $beta = null, array &$metadata = null)
+    {
+        $lastItem = null;
+        $i = 0;
+        $wrap = function (CacheItem $item = null) use ($key, $callback, $beta, &$wrap, &$i, &$lastItem, &$metadata) {
+            $adapter = $this->adapters[$i];
+            if (isset($this->adapters[++$i])) {
+                $callback = $wrap;
+                $beta = INF === $beta ? INF : 0;
+            }
+            if ($adapter instanceof CacheInterface) {
+                $value = $adapter->get($key, $callback, $beta, $metadata);
+            } else {
+                $value = $this->doGet($adapter, $key, $callback, $beta, $metadata);
+            }
+            if (null !== $item) {
+                ($this->syncItem)($lastItem = $lastItem ?? $item, $item, $metadata);
+            }
+
+            return $value;
+        };
+
+        return $wrap();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getItem($key)
     {
-        $saveUp = $this->saveUp;
+        $syncItem = $this->syncItem;
+        $misses = [];
 
         foreach ($this->adapters as $i => $adapter) {
             $item = $adapter->getItem($key);
 
             if ($item->isHit()) {
                 while (0 <= --$i) {
-                    $saveUp($this->adapters[$i], $item);
+                    $this->adapters[$i]->save($syncItem($item, $misses[$i]));
                 }
 
                 return $item;
             }
+
+            $misses[$i] = $item;
         }
 
         return $item;
@@ -94,14 +141,15 @@ class ChainAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getItems(array $keys = array())
+    public function getItems(array $keys = [])
     {
         return $this->generateItems($this->adapters[0]->getItems($keys), 0);
     }
 
-    private function generateItems($items, $adapterIndex)
+    private function generateItems(iterable $items, int $adapterIndex)
     {
-        $missing = array();
+        $missing = [];
+        $misses = [];
         $nextAdapterIndex = $adapterIndex + 1;
         $nextAdapter = isset($this->adapters[$nextAdapterIndex]) ? $this->adapters[$nextAdapterIndex] : null;
 
@@ -110,17 +158,18 @@ class ChainAdapter implements AdapterInterface
                 yield $k => $item;
             } else {
                 $missing[] = $k;
+                $misses[$k] = $item;
             }
         }
 
         if ($missing) {
-            $saveUp = $this->saveUp;
+            $syncItem = $this->syncItem;
             $adapter = $this->adapters[$adapterIndex];
             $items = $this->generateItems($nextAdapter->getItems($missing), $nextAdapterIndex);
 
             foreach ($items as $k => $item) {
                 if ($item->isHit()) {
-                    $saveUp($adapter, $item);
+                    $adapter->save($syncItem($item, $misses[$k]));
                 }
 
                 yield $k => $item;
@@ -130,6 +179,8 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function hasItem($key)
     {
@@ -144,14 +195,23 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $prefix
+     *
+     * @return bool
      */
-    public function clear()
+    public function clear(/*string $prefix = ''*/)
     {
+        $prefix = 0 < \func_num_args() ? (string) func_get_arg(0) : '';
         $cleared = true;
         $i = $this->adapterCount;
 
         while ($i--) {
-            $cleared = $this->adapters[$i]->clear() && $cleared;
+            if ($this->adapters[$i] instanceof AdapterInterface) {
+                $cleared = $this->adapters[$i]->clear($prefix) && $cleared;
+            } else {
+                $cleared = $this->adapters[$i]->clear() && $cleared;
+            }
         }
 
         return $cleared;
@@ -159,6 +219,8 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function deleteItem($key)
     {
@@ -174,6 +236,8 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function deleteItems(array $keys)
     {
@@ -189,6 +253,8 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function save(CacheItemInterface $item)
     {
@@ -204,6 +270,8 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function saveDeferred(CacheItemInterface $item)
     {
@@ -219,6 +287,8 @@ class ChainAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return bool
      */
     public function commit()
     {
@@ -230,5 +300,33 @@ class ChainAdapter implements AdapterInterface
         }
 
         return $committed;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prune()
+    {
+        $pruned = true;
+
+        foreach ($this->adapters as $adapter) {
+            if ($adapter instanceof PruneableInterface) {
+                $pruned = $adapter->prune() && $pruned;
+            }
+        }
+
+        return $pruned;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reset()
+    {
+        foreach ($this->adapters as $adapter) {
+            if ($adapter instanceof ResetInterface) {
+                $adapter->reset();
+            }
+        }
     }
 }
