@@ -81,7 +81,7 @@ class ExpertManager implements IManager {
     $uri = $this->grav['uri'];
 
     $username = $uri->paths()[2];
-    $user = User::load($username);
+    $user = $this->grav['accounts']->load($username);
 
     if (isset($_POST['raw'])) {
       $user->file()->raw($_POST['raw']);

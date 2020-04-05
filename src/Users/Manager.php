@@ -65,7 +65,7 @@ class Manager implements IManager, EventSubscriberInterface {
     if (preg_match('|user-manager/|', $type)) {
       $post = $this->adminController->data;
 
-      $obj = User::load(preg_replace('|user-manager/|', '', $type));
+      $obj = $this->grav['accounts']->load(preg_replace('|user-manager/|', '', $type));
       $obj->merge($post);
 
       $e['data_type'] = $obj;
@@ -134,7 +134,7 @@ class Manager implements IManager, EventSubscriberInterface {
       }
     } elseif ($method === 'taskUserLoginAs') {
       $username = $this->grav['uri']->paths()[2];
-      $user = User::load($username);
+      $user = $this->grav['accounts']->load($username);
       $user->authenticated = true;
 
       $this->grav['session']->user = $user;
@@ -171,7 +171,7 @@ class Manager implements IManager, EventSubscriberInterface {
 
     if ($user) {
       if (isset($_POST['task']) && $_POST['task'] === 'admin-addon-user-manager-save') {
-        $user = User::load($user);
+        $user = $this->grav['accounts']->load($user);
         $post = $_POST['data'];
 
         try {
@@ -191,7 +191,7 @@ class Manager implements IManager, EventSubscriberInterface {
         $blueprints = new Blueprints;
         $blueprint = $blueprints->get('user/aaum-account');
         $vars['blueprints'] = $blueprint;
-        $vars['user'] = $user = User::load($user);
+        $vars['user'] = $user = $this->grav['accounts']->load($user);
         $vars['exists'] = $user->exists();
       }
     } else {
@@ -211,7 +211,7 @@ class Manager implements IManager, EventSubscriberInterface {
           $groups = $_POST['groups'];
 
           foreach ($usernames as $username) {
-            $user = User::load($username);
+            $user = $this->grav['accounts']->load($username);
             if ($user->file()->exists()) {
               if (!isset($user['groups']) || !is_array($user['groups'])) {
                 $user['groups'] = [];
@@ -228,7 +228,7 @@ class Manager implements IManager, EventSubscriberInterface {
           $groups = $_POST['groups'];
 
           foreach ($usernames as $username) {
-            $user = User::load($username);
+            $user = $this->grav['accounts']->load($username);
             if ($user->file()->exists()) {
               if (!isset($user['groups']) || !is_array($user['groups'])) {
                 $user['groups'] = [];
@@ -248,7 +248,7 @@ class Manager implements IManager, EventSubscriberInterface {
           }
 
           foreach ($usernames as $username) {
-            $user = User::load($username);
+            $user = $this->grav['accounts']->load($username);
             if ($user->file()->exists()) {
               if (!isset($user['access']) || !is_array($user['access'])) {
                 $user['access'] = [];
@@ -263,7 +263,7 @@ class Manager implements IManager, EventSubscriberInterface {
         } else if (isset($_POST['bulk_remove_acl']) && isset($_POST['permissions'])) {
           // Bulk remove permissions from users
           foreach ($usernames as $username) {
-            $user = User::load($username);
+            $user = $this->grav['accounts']->load($username);
             if ($user->file()->exists()) {
               if (!isset($user['access']) || !is_array($user['access'])) {
                 $user['access'] = [];
@@ -363,7 +363,7 @@ class Manager implements IManager, EventSubscriberInterface {
       $files = $dir ? array_diff(scandir($dir), ['.', '..']) : [];
       foreach ($files as $file) {
         if (Utils::endsWith($file, YAML_EXT)) {
-          $user = User::load(trim(pathinfo($file, PATHINFO_FILENAME)));
+          $user = $this->grav['accounts']->load(trim(pathinfo($file, PATHINFO_FILENAME)));
           $users[$user->username] = $user;
         }
       }
@@ -402,7 +402,7 @@ class Manager implements IManager, EventSubscriberInterface {
   }
 
   public function removeUser($username) {
-    $user = User::load($username);
+    $user = $this->grav['accounts']->load($username);
 
     if ($user->file()->exists()) {
       $users = $this->users();
