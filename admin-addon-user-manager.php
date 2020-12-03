@@ -66,6 +66,7 @@ class AdminAddonUserManagerPlugin extends Plugin {
       'onAdminMenu' => ['onAdminMenu', 0],
       'onAssetsInitialized' => ['onAssetsInitialized', 0],
       'onAdminTaskExecute' => ['onAdminTaskExecute', 0],
+      'onGetPageBlueprints' => ['onGetPageBlueprints', 0]
     ]);
 
     $this->registerPermissions();
@@ -152,6 +153,16 @@ class AdminAddonUserManagerPlugin extends Plugin {
     }
 
     $this->grav['admin']->addPermissions(['site.login' => 'boolean']);
+  }
+
+  /**
+   * Add blueprint directory.
+   *
+   */
+  public function onGetPageBlueprints(Event $event): void
+  {
+        $types = $event->types;
+        $types->scanBlueprints('plugin://' . $this->name . '/admin/themes/grav/blueprints');
   }
 
 }

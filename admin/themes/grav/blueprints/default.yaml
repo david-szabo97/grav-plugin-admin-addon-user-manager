@@ -1,0 +1,36 @@
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        advanced:
+          fields:
+            overrides:
+              fields: 
+                header.access.site.login:
+                  type: toggle 
+                  label: PLUGIN_ADMIN.SITE_ACCESS
+                  help: PLUGIN_ADMIN.ACCESS_HELP
+                  toggleable: true
+                  config-default@: system.pages.access
+                  default: true 
+                  options:
+                    1: PLUGIN_ADMIN.ENABLED
+                    0: PLUGIN_ADMIN.DISABLED
+                  validate:
+                    type: bool
+
+                header.access.groups:
+                  type: select
+                  multiple: true
+                  toggleable: true
+                  label: PLUGIN_ADMIN.GROUPS
+                  help: ''
+                  data-options@: '\AdminAddonUserManager\Group::groupNames'
+                  validate:
+                    type: commalist
