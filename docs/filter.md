@@ -43,7 +43,7 @@ Since version 2.5.0 it's now possible to do simple searches rather than advanced
 
 ## Groups
 
-Since version 2.5.0 it's now possible to do simple searches rather than advanced filter expressions. Just type whatever you are looking for and it will search in the `groupname`, `readableName`, and `description` fields of the user.
+Since version 2.5.0 it's now possible to do simple searches rather than advanced filter expressions. Just type whatever you are looking for and it will search in the `groupname`, `readableName`, and `description` fields of the group.
 
 ### Available variables
 
