@@ -1,0 +1,34 @@
+PLUGIN_ADMIN_ADDON_USER_MANAGER:
+  USER_MANAGER: Benutzer
+  GROUP_MANAGER: Gruppen
+  FILTER_ERROR: Fehler beim Filtern
+  FILTER_USERS: Benutzer filtern
+  FILTER_GROUPS: Gruppen filtern
+  NO_RESULTS: Keine Ergebnisse
+  EXPERT: Experte
+  PAGINATION_SUMMARY: Zeige %d – %d von %d
+  BULK_ACTION: Mehrfachbearbeitung
+  ACTIONS: Aktionen
+  CUSTOM_PERMISSIONS: Benutzerdefinierte Berechtigungen
+  CUSTOM_PERMISSIONS_PLACEHOLDER: "Berechtigung (z. B. 'site.login')"
+  USERS_PER_PAGE: Benutzer pro Seite
+  DEFAULT_LIST_STYLE: Standard-Auflistung
+  GRID: Raster
+  LIST: Liste
+  GROUP: Gruppe
+  GROUPS: Gruppen
+  READABLE_NAME: Lesbarer Name
+  ICON: Icon
+  ADD_GROUP: Gruppe hinzufügen
+  USERS: Benutzer
+  HELP: Hilfe
+  BULK_DELETE_USER: Ausgewählte Nutzer löschen
+  BULK_DELETE: Löschen
+  BULK_USER_GROUP: Mehrfachbearbeitung von Nutzern in Bezug auf Gruppen
+  BULK_ADD_GROUP: Ausgewählte Nutzer zu den ausgewählten Gruppen hinzufügen
+  BULK_REMOVE_GROUP: Ausgewählte Nutzer aus den ausgewählten Gruppen entfernen
+  BULK_DELETE_GROUP: Ausgewählte Gruppen löschen
+  BULK_ADD_PERMISSIONS: Ausgewählte Berechtigungen für ausgewählte Nutzer hinzufügen
+  BULK_REMOVE_PERMISSIONS: Ausgewählte Berechtigungen für ausgewählte Nutzer entfernen
+  LOGIN_AS: Anmelden als
+  USER_CONFIRM_DELETE: Möchten Sie diesen Nutzer wirklich löschen?
