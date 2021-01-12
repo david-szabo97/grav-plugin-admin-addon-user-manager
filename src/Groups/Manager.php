@@ -131,6 +131,8 @@ class Manager implements IManager, EventSubscriberInterface {
     $method = $event['method'];
 
     if ($method === 'taskGroupDelete' && ($group = $this->grav['uri']->param('name', false))) {
+      $groupObj = Group::load($group);
+      $this->grav->fireEvent('AAUM_onGroupRemove', new Event(['group' => $groupObj]));
       Group::remove($group);
       $this->grav->redirect($this->grav['uri']->url($this->getLocation()));
       return true;
@@ -157,6 +159,8 @@ class Manager implements IManager, EventSubscriberInterface {
       if (isset($_POST['bulk_delete'])) {
         // Bulk delete groups
         foreach ($groupnames as $groupname) {
+          $groupObj = Group::load($groupname);
+          $this->grav->fireEvent('AAUM_onGroupRemove', new Event(['group' => $groupObj]));
           Group::remove($groupname);
         }
 
