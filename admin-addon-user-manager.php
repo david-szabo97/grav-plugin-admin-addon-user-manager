@@ -107,7 +107,6 @@ class AdminAddonUserManagerPlugin extends Plugin {
       if ($page->slug() === $manager->getLocation() && $this->grav['admin']->authorize(['admin.super', $manager->getRequiredPermission()])) {
         $session->{$this->name . '.previous_url'} = $uri->route() . $uri->params();
 
-        $page = $this->grav['admin']->page(true);
         $page->id('aaum-' . implode('/', $uri->paths()));
 
         $twig->twig_vars['context'] = $page;
