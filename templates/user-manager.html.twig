@@ -70,6 +70,7 @@
           <div class="cell cell--header">
             <div class="user">
               <div class="user__checkbox"><input type="checkbox" id="selectAll" /></div>
+              <div class="user__username">{{ "PLUGIN_ADMIN.FULL_NAME"|tu }}</div>
               <div class="user__username">{{ "PLUGIN_ADMIN.USERNAME"|tu }}</div>
               <div class="user__email">{{ "PLUGIN_ADMIN.EMAIL"|tu }}</div>
               <div class="user__actions">{{ "PLUGIN_ADMIN_ADDON_USER_MANAGER.ACTIONS"|tu }}</div>
@@ -84,6 +85,7 @@
               {% else %}
               <div class="user__checkbox"><input type="checkbox" name="selected[]" value="{{ user.username }}" /></div>
               {% endif %}
+              <div class="user__username"><a href="{{ base_url }}/user-manager/{{ user.username }}">{{ user.fullname }}</a></div>
               <div class="user__username"><a href="{{ base_url }}/user-manager/{{ user.username }}">{{ user.username }}</a></div>
               <div class="user__email">{{ user.email }}</div>
               <div class="user__actions">
