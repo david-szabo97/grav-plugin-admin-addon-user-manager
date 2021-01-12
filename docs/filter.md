@@ -1,6 +1,8 @@
 # Filter expression
 
 ## Users
+
+Since version 2.5.0 it's now possible to do simple searches rather than advanced filter expressions. Just type whatever you are looking for and it will search in the `username`, `email`, and `fullName` fields of the user.
 ### Available variables
 * `user.username` username of the user
 * `user.email` email of the user
@@ -35,6 +37,9 @@
   ```
 
 ## Groups
+
+Since version 2.5.0 it's now possible to do simple searches rather than advanced filter expressions. Just type whatever you are looking for and it will search in the `groupname`, `readableName`, and `description` fields of the user.
+
 ### Available variables
 * `group.groupname` name of the group
 * `group.readableName` readable name of the group
