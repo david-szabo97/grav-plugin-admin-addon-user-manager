@@ -303,6 +303,11 @@ class Manager implements IManager, EventSubscriberInterface {
       $filter = (empty($_GET['filter'])) ? '' : $_GET['filter'];
       $vars['filter'] = $filter;
       if ($filter) {
+          if (preg_match("/^[0-9a-zA-Z \-_\.@]+$/", $filter)) {
+          $filter = preg_quote($filter, '/');
+          $filter = "user.username matches '/$filter/' or user.email matches '/$filter/' or user.fullName matches '/$filter/'";
+        }
+
         try {
           $language = new ExpressionLanguage();
           $language->addFunction(ExpressionFunction::fromPhp('count'));
@@ -311,7 +316,7 @@ class Manager implements IManager, EventSubscriberInterface {
               $user->groups = [];
             }
 
-            if (!$language->evaluate($_GET['filter'], ['user' => $user])) {
+            if (!$language->evaluate($filter, ['user' => $user])) {
               unset($users[$k]);
             }
           }

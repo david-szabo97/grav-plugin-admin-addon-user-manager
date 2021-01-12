@@ -200,11 +200,16 @@ class Manager implements IManager, EventSubscriberInterface {
       $filter = (empty($_GET['filter'])) ? '' : $_GET['filter'];
       $vars['filter'] = $filter;
       if ($filter) {
+        if (preg_match("/^[0-9a-zA-Z \-_\.@]+$/", $filter)) {
+          $filter = preg_quote($filter, '/');
+          $filter = "group.groupname matches '/$filter/' or group.readableName matches '/$filter/' or group.description matches '/$filter/'";
+        }
+
         try {
           $language = new ExpressionLanguage();
           $language->addFunction(ExpressionFunction::fromPhp('count'));
           foreach ($groups as $k => $group) {
-            if (!$language->evaluate($_GET['filter'], ['group' => $group])) {
+            if (!$language->evaluate($filter, ['group' => $group])) {
               unset($groups[$k]);
             }
           }
