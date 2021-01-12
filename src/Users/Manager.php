@@ -406,6 +406,7 @@ class Manager implements IManager, EventSubscriberInterface {
     $user = $this->grav['accounts']->load($username);
 
     if ($user->file()->exists()) {
+      $this->grav->fireEvent('AAUM_onUserRemove', new Event(['user' => $user]));
       $users = $this->users();
       $user->file()->delete();
       // Prevent users cache refresh
