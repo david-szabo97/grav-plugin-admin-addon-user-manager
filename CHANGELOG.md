@@ -1,3 +1,17 @@
+# v2.4.0
+## 01/12/2021
+
+1. [](#new)
+    * German translation (Thanks: https://github.com/Markus00000 PR #73)
+    * Event hook for user removal: AAUM_onUserRemove
+    * Event hook for group removal: AAUM_OnGroupRemove
+
+2. [](#improved)
+    * Full name column is now shown in the User Manager list display (#77)
+
+3. [](#bugfix)
+    * Fixed an issue when Grav pages folder is mounted on docker causing the plugin to malfunction (#75)
+
 # v2.3.0
 ## 04/05/2020
 

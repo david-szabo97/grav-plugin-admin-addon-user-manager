@@ -1,5 +1,5 @@
 name: Admin Addon User Manager
-version: 2.3.0
+version: 2.4.0
 description: A simple admin panel extension which adds the option to manage users and groups
 icon: plug
 author:
@@ -12,8 +12,8 @@ docs: https://github.com/david-szabo97/grav-plugin-admin-addon-user-manager/blob
 license: MIT
 
 dependencies:
-    - { name: grav, version: '>=1.0.0' }
-    - { name: admin, version: '>=1.0.0' }
+  - { name: grav, version: ">=1.0.0" }
+  - { name: admin, version: ">=1.0.0" }
 
 form:
   validation: strict
