@@ -1,3 +1,9 @@
+# v2.5.0
+## 01/12/2021
+
+1. [](#new)
+    * It's now possible to do simple searches rather than advanced searches in the user and group manager. (#69)
+
 # v2.4.0
 ## 01/12/2021
 
