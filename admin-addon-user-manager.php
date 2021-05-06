@@ -41,10 +41,25 @@ class AdminAddonUserManagerPlugin extends Plugin {
   }
 
   public static function getSubscribedEvents() {
+    global $grav;
+    if (version_compare($grav->getVersion(), '1.7.0', '>')) {
+      return [
+        'onPluginsInitialized' => ['notSupported', 0]
+      ];
+    }
+
     return [
       'onPluginsInitialized' => ['onPluginsInitialized', 0],
       'onAdminRegisterPermissions' => ['onAdminRegisterPermissions', 1000]
     ];
+  }
+
+  public function notSupported() {
+    if (!$this->isAdmin() || !$this->grav['user']->authenticated) {
+      return;
+    }
+
+    $this->grav['admin']->addTempMessage('Admin Addon User Manager plugin is not supported since Grav v1.7.0. Please use the built-in accounts and groups management. Thanks for using my plugin for the time being! Now it\'s time to delete it.', 'error');
   }
 
   public function onPluginsInitialized() {

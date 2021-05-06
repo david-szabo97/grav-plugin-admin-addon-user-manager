@@ -1,5 +1,5 @@
 name: Admin Addon User Manager
-version: 2.5.0
+version: 2.6.0
 description: A simple admin panel extension which adds the option to manage users and groups
 icon: plug
 author:
@@ -13,6 +13,7 @@ license: MIT
 
 dependencies:
   - { name: grav, version: ">=1.0.0" }
+  - { name: grav, version: "<1.7.0" }
   - { name: admin, version: ">=1.0.0" }
 
 form:

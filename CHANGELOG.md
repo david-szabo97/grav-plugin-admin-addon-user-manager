@@ -1,3 +1,9 @@
+# v2.6.0
+## 06/05/2021
+
+1. [](#new)
+    * Since Grav v1.7.0 has a built-in interface for managing users and groups, it's time to say goodbye! Thanks for using my plugin!
+
 # v2.5.0
 ## 01/12/2021
 
