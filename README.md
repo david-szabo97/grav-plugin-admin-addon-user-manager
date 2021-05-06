@@ -2,6 +2,8 @@
 
 The **Admin Addon User Manager** Plugin is for [Grav CMS](http://github.com/getgrav/grav). A simple admin panel extension which adds the option to manage users and groups.
 
+If you are using `>= Grav v1.7.0`, then please use the built-in interface for managing accounts and groups.
+
 ## Installation
 
 Installing the Admin Addon User Manager plugin can be done in one of two ways. The GPM (Grav Package Manager) installation method enables you to quickly and easily install the plugin with a simple terminal command, while the manual method enables you to do so via a zip file.
